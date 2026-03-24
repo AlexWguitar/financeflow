@@ -10,121 +10,183 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg: #13151f; --surface: #1c1f2e; --surface2: #252840; --surface3: #2e3250;
-  --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.12);
-  --text: #e4e7f0; --muted: #7a7f9a; --muted2: #555a75;
-  --green: #27c98a; --green-dim: rgba(39,201,138,0.12);
-  --red: #e05c5c; --red-dim: rgba(224,92,92,0.12);
-  --blue: #5b8dee; --blue-dim: rgba(91,141,238,0.12);
-  --amber: #f5a623;
+  --bg:#13151f; --surface:#1c1f2e; --surface2:#252840; --surface3:#2e3250;
+  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.12);
+  --text:#e4e7f0; --muted:#7a7f9a; --muted2:#555a75;
+  --green:#27c98a; --green-dim:rgba(39,201,138,0.12);
+  --red:#e05c5c; --red-dim:rgba(224,92,92,0.12);
+  --blue:#5b8dee; --blue-dim:rgba(91,141,238,0.12);
+  --amber:#f5a623; --amber-dim:rgba(245,166,35,0.12);
+  --purple:#9b7fe8; --purple-dim:rgba(155,127,232,0.12);
 }
-html { font-size: 14px; }
-body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+html{font-size:14px;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;}
 
-#setup-screen { display:flex; align-items:center; justify-content:center; min-height:100vh; padding:24px; }
-#auth-screen  { display:none; align-items:center; justify-content:center; min-height:100vh; padding:24px; }
-#app { display:none; }
+/* SCREENS */
+#setup-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;}
+#auth-screen{display:none;align-items:center;justify-content:center;min-height:100vh;padding:24px;}
+#app{display:none;}
+#admin-screen{display:none;}
 
-.center-card { background:var(--surface); border:1px solid var(--border2); border-radius:16px; padding:40px; max-width:440px; width:100%; }
-.card-logo { font-size:22px; font-weight:600; color:var(--blue); margin-bottom:6px; }
-.card-logo span { color:var(--text); font-weight:400; }
-.card-sub { color:var(--muted); font-size:13px; margin-bottom:26px; line-height:1.6; }
-.note { background:var(--blue-dim); border:1px solid rgba(91,141,238,0.2); border-radius:8px; padding:12px 14px; font-size:12px; color:#8ab4f8; margin-bottom:20px; line-height:1.7; }
-.note code { font-family:'DM Mono',monospace; background:rgba(91,141,238,0.2); padding:1px 5px; border-radius:3px; }
+.center-card{background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:40px;max-width:440px;width:100%;}
+.card-logo{font-size:22px;font-weight:600;color:var(--blue);margin-bottom:6px;}
+.card-logo span{color:var(--text);font-weight:400;}
+.card-sub{color:var(--muted);font-size:13px;margin-bottom:26px;line-height:1.6;}
+.note{background:var(--blue-dim);border:1px solid rgba(91,141,238,0.2);border-radius:8px;padding:12px 14px;font-size:12px;color:#8ab4f8;margin-bottom:20px;line-height:1.7;}
+.note code{font-family:'DM Mono',monospace;background:rgba(91,141,238,0.2);padding:1px 5px;border-radius:3px;}
 
-.fg { display:flex; flex-direction:column; gap:4px; margin-bottom:14px; }
-.fg label { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; }
-.fg input, .fg select { background:var(--bg); border:1px solid var(--border2); color:var(--text); border-radius:8px; padding:10px 12px; font-size:13px; outline:none; font-family:'DM Sans',sans-serif; transition:border-color 0.15s; width:100%; }
-.fg input:focus, .fg select:focus { border-color:var(--blue); }
-.fg select option { background:var(--surface); }
+.fg{display:flex;flex-direction:column;gap:4px;margin-bottom:14px;}
+.fg label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;}
+.fg input,.fg select{background:var(--bg);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:10px 12px;font-size:13px;outline:none;font-family:'DM Sans',sans-serif;transition:border-color 0.15s;width:100%;}
+.fg input:focus,.fg select:focus{border-color:var(--blue);}
+.fg select option{background:var(--surface);}
 
-.btn-primary { width:100%; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:11px; font-size:14px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; transition:opacity 0.15s; display:flex; align-items:center; justify-content:center; gap:8px; }
-.btn-primary:hover { opacity:0.85; }
-.btn-primary:disabled { opacity:0.5; cursor:not-allowed; }
-.btn-primary.green { background:var(--green); }
+.btn-primary{width:100%;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:11px;font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.15s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-primary:hover{opacity:0.85;}
+.btn-primary:disabled{opacity:0.5;cursor:not-allowed;}
+.btn-primary.green{background:var(--green);}
+.btn-primary.red{background:var(--red);}
 
-.auth-tabs { display:flex; border-bottom:1px solid var(--border); margin-bottom:22px; }
-.auth-tab { flex:1; padding:10px; text-align:center; font-size:13px; font-weight:500; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:all 0.15s; }
-.auth-tab.active { color:var(--blue); border-bottom-color:var(--blue); }
-.msg-box { border-radius:8px; padding:10px 14px; font-size:12px; margin-bottom:14px; display:none; line-height:1.5; }
-.msg-error { background:var(--red-dim); border:1px solid rgba(224,92,92,0.25); color:var(--red); }
-.msg-success { background:var(--green-dim); border:1px solid rgba(39,201,138,0.25); color:var(--green); }
-.link-btn { background:none; border:none; color:var(--blue); font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif; margin-top:14px; width:100%; text-align:center; }
-.link-btn:hover { opacity:0.8; }
+.auth-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:22px;}
+.auth-tab{flex:1;padding:10px;text-align:center;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.15s;}
+.auth-tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+.msg-box{border-radius:8px;padding:10px 14px;font-size:12px;margin-bottom:14px;display:none;line-height:1.5;}
+.msg-error{background:var(--red-dim);border:1px solid rgba(224,92,92,0.25);color:var(--red);}
+.msg-success{background:var(--green-dim);border:1px solid rgba(39,201,138,0.25);color:var(--green);}
+.link-btn{background:none;border:none;color:var(--blue);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:14px;width:100%;text-align:center;}
+.link-btn:hover{opacity:0.8;}
 
-.topbar { background:var(--surface); border-bottom:1px solid var(--border); padding:0 20px; height:52px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
-.logo { font-size:16px; font-weight:600; color:var(--blue); }
-.logo span { color:var(--text); font-weight:400; }
-.topbar-right { display:flex; align-items:center; gap:10px; }
-.user-badge { font-size:11px; color:var(--muted); background:var(--surface2); border:1px solid var(--border); border-radius:6px; padding:4px 10px; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.month-nav { display:flex; align-items:center; gap:6px; }
-.month-nav button { background:var(--surface2); border:1px solid var(--border); color:var(--muted); border-radius:6px; width:28px; height:28px; cursor:pointer; font-size:15px; transition:all 0.15s; }
-.month-nav button:hover { background:var(--surface3); color:var(--text); }
-.month-label { font-size:13px; font-weight:500; min-width:120px; text-align:center; }
-.btn-logout { background:none; border:1px solid var(--border); color:var(--muted); border-radius:6px; padding:4px 10px; font-size:11px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
-.btn-logout:hover { color:var(--red); border-color:rgba(224,92,92,0.4); }
+/* TOPBAR */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.logo{font-size:16px;font-weight:600;color:var(--blue);}
+.logo span{color:var(--text);font-weight:400;}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.user-badge{font-size:11px;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 10px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.month-nav{display:flex;align-items:center;gap:6px;}
+.month-nav button{background:var(--surface2);border:1px solid var(--border);color:var(--muted);border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:15px;transition:all 0.15s;}
+.month-nav button:hover{background:var(--surface3);color:var(--text);}
+.month-label{font-size:13px;font-weight:500;min-width:120px;text-align:center;}
+.btn-topbar{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
+.btn-topbar:hover{color:var(--text);border-color:var(--border2);}
+.btn-topbar.admin-btn{color:var(--amber);border-color:rgba(245,166,35,0.3);background:var(--amber-dim);}
+.btn-topbar.admin-btn:hover{opacity:0.85;}
+.btn-topbar.logout:hover{color:var(--red);border-color:rgba(224,92,92,0.4);}
 
-.main { padding:20px; max-width:1200px; margin:0 auto; }
+.main{padding:20px;max-width:1200px;margin:0 auto;}
 
-.kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:18px; }
-.kpi { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px 18px; }
-.kpi-label { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.6px; margin-bottom:8px; }
-.kpi-value { font-size:22px; font-weight:600; line-height:1; }
-.kpi-sub { font-size:11px; color:var(--muted); margin-top:6px; }
-.kpi-bar { margin-top:10px; height:3px; background:var(--bg); border-radius:2px; overflow:hidden; }
-.kpi-bar-fill { height:100%; border-radius:2px; transition:width 0.6s; }
-.c-green{color:var(--green);} .c-red{color:var(--red);} .c-blue{color:var(--blue);} .c-amber{color:var(--amber);}
+/* KPIs */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+.kpi-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;}
+.kpi-value{font-size:22px;font-weight:600;line-height:1;}
+.kpi-sub{font-size:11px;color:var(--muted);margin-top:6px;}
+.kpi-bar{margin-top:10px;height:3px;background:var(--bg);border-radius:2px;overflow:hidden;}
+.kpi-bar-fill{height:100%;border-radius:2px;transition:width 0.6s;}
+.c-green{color:var(--green);}.c-red{color:var(--red);}.c-blue{color:var(--blue);}.c-amber{color:var(--amber);}
 
-.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px; }
-.grid-3-1 { display:grid; grid-template-columns:3fr 2fr; gap:14px; margin-bottom:14px; }
-.card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px 18px; }
-.card-title { font-size:11px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:14px; }
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.grid-3-1{display:grid;grid-template-columns:3fr 2fr;gap:14px;margin-bottom:14px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+.card-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px;}
 
-.type-toggle { display:flex; gap:6px; margin-bottom:14px; }
-.type-btn { flex:1; padding:8px; border-radius:8px; border:1px solid var(--border); background:transparent; color:var(--muted); font-size:13px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
-.type-btn.active-g { background:var(--red-dim); border-color:rgba(224,92,92,0.3); color:var(--red); }
-.type-btn.active-e { background:var(--green-dim); border-color:rgba(39,201,138,0.3); color:var(--green); }
+.type-toggle{display:flex;gap:6px;margin-bottom:14px;}
+.type-btn{flex:1;padding:8px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
+.type-btn.active-g{background:var(--red-dim);border-color:rgba(224,92,92,0.3);color:var(--red);}
+.type-btn.active-e{background:var(--green-dim);border-color:rgba(39,201,138,0.3);color:var(--green);}
 
-.form-row { display:grid; grid-template-columns:2fr 1fr 1fr; gap:8px; margin-bottom:8px; }
-.form-row2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px; }
-.fi { display:flex; flex-direction:column; gap:4px; }
-.fi label { font-size:11px; color:var(--muted); }
-.fi input, .fi select { background:var(--bg); border:1px solid var(--border); color:var(--text); border-radius:7px; padding:8px 10px; font-size:13px; outline:none; font-family:'DM Sans',sans-serif; transition:border-color 0.15s; }
-.fi input:focus, .fi select:focus { border-color:var(--blue); }
-.fi select option { background:var(--surface); }
-.btn-submit { width:100%; background:var(--blue); color:#fff; border:none; border-radius:8px; padding:9px; font-size:13px; font-weight:500; cursor:pointer; font-family:'DM Sans',sans-serif; transition:opacity 0.15s; display:flex; align-items:center; justify-content:center; gap:6px; }
-.btn-submit:hover { opacity:0.85; }
-.btn-submit.green { background:var(--green); }
-.btn-submit:disabled { opacity:0.5; cursor:not-allowed; }
+.form-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-bottom:8px;}
+.form-row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.fi{display:flex;flex-direction:column;gap:4px;}
+.fi label{font-size:11px;color:var(--muted);}
+.fi input,.fi select{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:7px;padding:8px 10px;font-size:13px;outline:none;font-family:'DM Sans',sans-serif;transition:border-color 0.15s;}
+.fi input:focus,.fi select:focus{border-color:var(--blue);}
+.fi select option{background:var(--surface);}
+.btn-submit{width:100%;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.15s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-submit:hover{opacity:0.85;}
+.btn-submit.green{background:var(--green);}
+.btn-submit:disabled{opacity:0.5;cursor:not-allowed;}
 
-.table-wrap { overflow-y:auto; max-height:280px; }
-.table-wrap::-webkit-scrollbar { width:4px; }
-.table-wrap::-webkit-scrollbar-thumb { background:var(--border2); border-radius:2px; }
-table { width:100%; border-collapse:collapse; font-size:12px; }
-thead th { color:var(--muted); font-weight:500; text-align:left; padding:6px 8px; border-bottom:1px solid var(--border); font-size:11px; text-transform:uppercase; position:sticky; top:0; background:var(--surface); }
-tbody td { padding:8px; border-bottom:1px solid rgba(255,255,255,0.03); }
-tbody tr:hover td { background:rgba(255,255,255,0.02); }
-tbody tr:last-child td { border-bottom:none; }
-.pill { display:inline-block; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:500; }
-.pill-e { background:var(--green-dim); color:var(--green); }
-.pill-g { background:var(--red-dim); color:var(--red); }
-.del { background:none; border:none; color:var(--muted2); cursor:pointer; font-size:15px; padding:0 4px; }
-.del:hover { color:var(--red); }
-.empty-row { text-align:center; color:var(--muted); padding:32px 0 !important; font-size:12px; }
+.table-wrap{overflow-y:auto;max-height:280px;}
+.table-wrap::-webkit-scrollbar{width:4px;}
+.table-wrap::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead th{color:var(--muted);font-weight:500;text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);font-size:11px;text-transform:uppercase;position:sticky;top:0;background:var(--surface);}
+tbody td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.03);}
+tbody tr:hover td{background:rgba(255,255,255,0.02);}
+tbody tr:last-child td{border-bottom:none;}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:500;}
+.pill-e{background:var(--green-dim);color:var(--green);}
+.pill-g{background:var(--red-dim);color:var(--red);}
+.pill-admin{background:var(--amber-dim);color:var(--amber);}
+.pill-user{background:var(--blue-dim);color:var(--blue);}
+.del{background:none;border:none;color:var(--muted2);cursor:pointer;font-size:15px;padding:0 4px;}
+.del:hover{color:var(--red);}
+.empty-row{text-align:center;color:var(--muted);padding:32px 0 !important;font-size:12px;}
 
-.cat-item { display:flex; align-items:center; gap:8px; margin-bottom:9px; }
-.cat-name { font-size:12px; min-width:90px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.cat-track { flex:1; height:5px; background:var(--bg); border-radius:3px; overflow:hidden; }
-.cat-fill { height:100%; border-radius:3px; transition:width 0.5s; }
-.cat-amt { font-size:11px; color:var(--muted); min-width:70px; text-align:right; font-family:'DM Mono',monospace; }
+.cat-item{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
+.cat-name{font-size:12px;min-width:90px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cat-track{flex:1;height:5px;background:var(--bg);border-radius:3px;overflow:hidden;}
+.cat-fill{height:100%;border-radius:3px;transition:width 0.5s;}
+.cat-amt{font-size:11px;color:var(--muted);min-width:70px;text-align:right;font-family:'DM Mono',monospace;}
 
-.spinner { display:inline-block; width:14px; height:14px; border:2px solid rgba(255,255,255,0.2); border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite; }
-@keyframes spin { to { transform:rotate(360deg); } }
-#toast { position:fixed; bottom:24px; right:24px; background:var(--surface2); border:1px solid var(--border2); color:var(--text); padding:10px 16px; border-radius:8px; font-size:13px; opacity:0; transition:opacity 0.2s; z-index:999; pointer-events:none; }
-#toast.show { opacity:1; }
+/* ADMIN PANEL */
+.admin-wrap{padding:20px;max-width:900px;margin:0 auto;}
+.admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.admin-title{font-size:18px;font-weight:600;}
+.admin-title span{color:var(--amber);}
+.admin-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;}
+.admin-stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+.admin-stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
+.admin-stat-val{font-size:20px;font-weight:600;}
 
-@media (max-width:900px) { .kpi-grid{grid-template-columns:repeat(2,1fr);} .grid-2,.grid-3-1{grid-template-columns:1fr;} .form-row{grid-template-columns:1fr 1fr;} }
-@media (max-width:500px) { .kpi-grid{grid-template-columns:repeat(2,1fr);} .form-row{grid-template-columns:1fr;} .form-row2{grid-template-columns:1fr;} .topbar{padding:0 12px;} .main{padding:12px;} .user-badge{display:none;} }
+.admin-section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:16px;}
+.admin-section-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
+
+.create-form{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:end;}
+.cf{display:flex;flex-direction:column;gap:4px;}
+.cf label{font-size:11px;color:var(--muted);}
+.cf input{background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:7px;padding:8px 10px;font-size:13px;outline:none;font-family:'DM Sans',sans-serif;transition:border-color 0.15s;}
+.cf input:focus{border-color:var(--blue);}
+.btn-create{background:var(--green);color:#fff;border:none;border-radius:7px;padding:8px 14px;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;height:35px;font-family:'DM Sans',sans-serif;}
+.btn-create:hover{opacity:0.85;}
+.btn-create:disabled{opacity:0.5;cursor:not-allowed;}
+
+.user-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.user-row:last-child{border-bottom:none;}
+.user-avatar{width:34px;height:34px;border-radius:50%;background:var(--blue-dim);border:1px solid rgba(91,141,238,0.2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--blue);flex-shrink:0;}
+.user-info{flex:1;min-width:0;}
+.user-email{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.user-meta{font-size:11px;color:var(--muted);margin-top:2px;}
+.user-actions{display:flex;gap:6px;flex-shrink:0;}
+.btn-action{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;white-space:nowrap;}
+.btn-action:hover{background:var(--surface2);color:var(--text);}
+.btn-action.danger:hover{color:var(--red);border-color:rgba(224,92,92,0.4);}
+.btn-action.warn:hover{color:var(--amber);border-color:rgba(245,166,35,0.4);}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:200;padding:24px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:28px;max-width:400px;width:100%;}
+.modal-title{font-size:15px;font-weight:600;margin-bottom:6px;}
+.modal-sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.5;}
+.modal-actions{display:flex;gap:8px;margin-top:20px;}
+.modal-actions button{flex:1;padding:10px;border-radius:8px;border:none;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.modal-cancel{background:var(--surface2);color:var(--muted);}
+.modal-cancel:hover{color:var(--text);}
+.modal-confirm{background:var(--red);color:#fff;}
+.modal-confirm:hover{opacity:0.85;}
+.modal-confirm.amber{background:var(--amber);}
+
+/* SERVICE KEY SETUP */
+#service-key-screen{display:none;align-items:center;justify-content:center;min-height:100vh;padding:24px;}
+
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;animation:spin 0.6s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+#toast{position:fixed;bottom:24px;right:24px;background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:10px 16px;border-radius:8px;font-size:13px;opacity:0;transition:opacity 0.2s;z-index:999;pointer-events:none;}
+#toast.show{opacity:1;}
+
+@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr);}.grid-2,.grid-3-1{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr 1fr;}.admin-stats{grid-template-columns:1fr 1fr;}.create-form{grid-template-columns:1fr 1fr;}}
+@media(max-width:500px){.kpi-grid{grid-template-columns:repeat(2,1fr);}.form-row{grid-template-columns:1fr;}.form-row2{grid-template-columns:1fr;}.topbar{padding:0 12px;}.main{padding:12px;}.user-badge{display:none;}.admin-stats{grid-template-columns:1fr;}.create-form{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -139,6 +201,18 @@ tbody tr:last-child td { border-bottom:none; }
     <div class="fg"><label>Supabase Anon Key</label><input type="text" id="sb-key" placeholder="eyJhbGciOiJI..." /></div>
     <button class="btn-primary" onclick="initSupabase()">Conectar →</button>
     <p style="margin-top:14px;font-size:11px;color:var(--muted2);text-align:center">Credenciais salvas no navegador</p>
+  </div>
+</div>
+
+<!-- SERVICE KEY SETUP (admin only) -->
+<div id="service-key-screen">
+  <div class="center-card">
+    <div class="card-logo">Finance<span>Flow</span> <span style="font-size:13px;color:var(--amber);font-weight:500">Admin</span></div>
+    <p class="card-sub">Para gerenciar usuários é necessária a chave administrativa do Supabase.</p>
+    <div class="note">No Supabase vá em <code>Settings → API</code> e copie a chave <strong>service_role</strong> (não compartilhe com ninguém!).</div>
+    <div class="fg"><label>Service Role Key</label><input type="password" id="service-key-input" placeholder="eyJhbGciOiJI..." /></div>
+    <button class="btn-primary" style="background:var(--amber)" onclick="saveServiceKey()">Entrar no painel admin →</button>
+    <button class="link-btn" onclick="showApp()">← Voltar ao app</button>
   </div>
 </div>
 
@@ -172,7 +246,8 @@ tbody tr:last-child td { border-bottom:none; }
         <div class="month-label" id="monthLabel"></div>
         <button onclick="changeMonth(1)">›</button>
       </div>
-      <button class="btn-logout" onclick="doLogout()">Sair</button>
+      <button class="btn-topbar admin-btn" id="admin-btn" onclick="goAdmin()" style="display:none">⚙ Admin</button>
+      <button class="btn-topbar logout" onclick="doLogout()">Sair</button>
     </div>
   </div>
   <div class="main">
@@ -231,33 +306,104 @@ tbody tr:last-child td { border-bottom:none; }
   </div>
 </div>
 
+<!-- ADMIN SCREEN -->
+<div id="admin-screen">
+  <div class="topbar">
+    <div class="logo">Finance<span>Flow</span> <span style="font-size:12px;color:var(--amber);font-weight:500;margin-left:6px">Admin</span></div>
+    <div class="topbar-right">
+      <button class="btn-topbar" onclick="showApp()">← Voltar ao app</button>
+      <button class="btn-topbar logout" onclick="doLogout()">Sair</button>
+    </div>
+  </div>
+  <div class="admin-wrap">
+    <div class="admin-header">
+      <div class="admin-title">Painel de <span>Administração</span></div>
+      <button class="btn-topbar" onclick="loadAdminData()" style="font-size:12px">↺ Atualizar</button>
+    </div>
+
+    <div class="admin-stats">
+      <div class="admin-stat"><div class="admin-stat-label">Total de usuários</div><div class="admin-stat-val c-blue" id="stat-users">—</div></div>
+      <div class="admin-stat"><div class="admin-stat-label">Lançamentos totais</div><div class="admin-stat-val c-green" id="stat-entries">—</div></div>
+      <div class="admin-stat"><div class="admin-stat-label">Último cadastro</div><div class="admin-stat-val" id="stat-last" style="font-size:14px">—</div></div>
+    </div>
+
+    <div class="admin-section">
+      <div class="admin-section-title">Criar novo usuário</div>
+      <div class="create-form">
+        <div class="cf"><label>Nome</label><input type="text" id="new-name" placeholder="Ex: Maria" /></div>
+        <div class="cf"><label>E-mail</label><input type="email" id="new-email" placeholder="email@exemplo.com" /></div>
+        <div class="cf"><label>Senha</label><input type="password" id="new-pass" placeholder="Mínimo 6 caracteres" /></div>
+        <button class="btn-create" id="btn-create-user" onclick="createUser()">+ Criar</button>
+      </div>
+      <div class="msg-box msg-error" id="create-error" style="margin-top:10px;margin-bottom:0"></div>
+      <div class="msg-box msg-success" id="create-success" style="margin-top:10px;margin-bottom:0"></div>
+    </div>
+
+    <div class="admin-section">
+      <div class="admin-section-title">
+        <span>Usuários cadastrados</span>
+        <span id="user-count" style="color:var(--muted);font-size:11px"></span>
+      </div>
+      <div id="user-list"><div style="color:var(--muted);font-size:12px;text-align:center;padding:24px 0">Carregando...</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CONFIRMAÇÃO -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-title" id="modal-title">Confirmar ação</div>
+    <div class="modal-sub" id="modal-sub"></div>
+    <div class="fg" id="modal-input-wrap" style="display:none">
+      <label id="modal-input-label">Nova senha</label>
+      <input type="password" id="modal-input" placeholder="Mínimo 6 caracteres" />
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="modal-confirm" id="modal-confirm-btn" onclick="confirmModal()">Confirmar</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script>
+const ADMIN_EMAIL = 'j.alex.junior@hotmail.com';
 const MONTHS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const CAT_COLORS={'Alimentação':'#5b8dee','Transporte':'#f5a623','Moradia':'#9b7fe8','Saúde':'#27c98a','Lazer':'#e05c5c','Educação':'#56d4f0','Salário':'#27c98a','Investimento':'#9b7fe8','Outros':'#7a7f9a'};
 
-let sb=null, curUser=null, curType='g', allEntries=[], trendChart=null, authMode='login';
+let sb=null, sbAdmin=null, curUser=null, curType='g', allEntries=[], trendChart=null, authMode='login';
 let now=new Date(), curMonth=now.getMonth(), curYear=now.getFullYear();
+let modalAction=null, modalTargetId=null;
 
-const fmt = v => 'R$ '+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-const fmtK = v => v>=1000?'R$'+(v/1000).toFixed(1)+'k':'R$'+Math.round(v);
-const mkKey = (y,m) => `${y}-${String(m+1).padStart(2,'0')}`;
+const fmt=v=>'R$ '+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtK=v=>v>=1000?'R$'+(v/1000).toFixed(1)+'k':'R$'+Math.round(v);
+const mkKey=(y,m)=>`${y}-${String(m+1).padStart(2,'0')}`;
+const isAdmin=()=>curUser&&curUser.email===ADMIN_EMAIL;
 
 function toast(msg,ms=2500){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),ms);}
 
 function show(id){
-  document.getElementById('setup-screen').style.display = id==='setup-screen'?'flex':'none';
-  document.getElementById('auth-screen').style.display  = id==='auth-screen'?'flex':'none';
-  document.getElementById('app').style.display          = id==='app'?'block':'none';
+  ['setup-screen','auth-screen','app','admin-screen','service-key-screen'].forEach(s=>{
+    const el=document.getElementById(s);
+    const flex=['setup-screen','auth-screen','service-key-screen'];
+    el.style.display = s===id ? (flex.includes(s)?'flex':'block') : 'none';
+  });
 }
 
+function showApp(){show('app');}
+
+// SETUP
 function initSupabase(){
   const url=document.getElementById('sb-url').value.trim();
   const key=document.getElementById('sb-key').value.trim();
   if(!url||!key){alert('Preencha os dois campos.');return;}
-  try{sb=window.supabase.createClient(url,key);localStorage.setItem('ff_url',url);localStorage.setItem('ff_key',key);checkSession();}
-  catch(e){alert('Erro: '+e.message);}
+  try{
+    sb=window.supabase.createClient(url,key);
+    localStorage.setItem('ff_url',url);
+    localStorage.setItem('ff_key',key);
+    checkSession();
+  }catch(e){alert('Erro: '+e.message);}
 }
 function resetSetup(){localStorage.removeItem('ff_url');localStorage.removeItem('ff_key');location.reload();}
 
@@ -266,6 +412,7 @@ async function checkSession(){
   if(session){curUser=session.user;enterApp();}else{show('auth-screen');}
 }
 
+// AUTH
 function switchAuthTab(mode){
   authMode=mode;
   document.getElementById('tab-login').className='auth-tab'+(mode==='login'?' active':'');
@@ -281,37 +428,44 @@ async function doAuth(){
   const password=document.getElementById('auth-password').value;
   const errEl=document.getElementById('auth-error');
   const sucEl=document.getElementById('auth-success');
-  errEl.style.display='none'; sucEl.style.display='none';
+  errEl.style.display='none';sucEl.style.display='none';
   if(!email||!password){errEl.textContent='Preencha e-mail e senha.';errEl.style.display='block';return;}
   const btn=document.getElementById('auth-btn');
-  btn.disabled=true; btn.innerHTML='<span class="spinner"></span>';
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';
   if(authMode==='login'){
     const {data,error}=await sb.auth.signInWithPassword({email,password});
     if(error){errEl.textContent='E-mail ou senha incorretos.';errEl.style.display='block';}
     else{curUser=data.user;enterApp();}
-  } else {
+  }else{
     const name=document.getElementById('auth-name').value.trim()||email.split('@')[0];
     const {data,error}=await sb.auth.signUp({email,password,options:{data:{name}}});
     if(error){errEl.textContent=error.message;errEl.style.display='block';}
     else if(data.user&&!data.session){sucEl.textContent='Conta criada! Verifique seu e-mail para confirmar.';sucEl.style.display='block';}
     else if(data.session){curUser=data.user;enterApp();}
   }
-  btn.disabled=false; btn.textContent=authMode==='login'?'Entrar':'Criar conta';
+  btn.disabled=false;btn.textContent=authMode==='login'?'Entrar':'Criar conta';
 }
 
-async function doLogout(){await sb.auth.signOut();curUser=null;allEntries=[];if(trendChart){trendChart.destroy();trendChart=null;}show('auth-screen');}
+async function doLogout(){
+  await sb.auth.signOut();
+  curUser=null;allEntries=[];sbAdmin=null;
+  if(trendChart){trendChart.destroy();trendChart=null;}
+  show('auth-screen');
+}
 
+// APP
 function enterApp(){
   const name=curUser.user_metadata?.name||curUser.email;
   document.getElementById('user-badge').textContent='👤 '+name;
   document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
-  show('app'); loadAll();
+  document.getElementById('admin-btn').style.display=isAdmin()?'block':'none';
+  show('app');loadAll();
 }
 
 async function loadAll(){
   const {data,error}=await sb.from('entries').select('*').eq('user_id',curUser.id).order('created_at',{ascending:false});
   if(error){toast('Erro ao carregar dados.');return;}
-  allEntries=data||[]; render();
+  allEntries=data||[];render();
 }
 
 const entriesFor=(y,m)=>allEntries.filter(e=>e.month_key===mkKey(y,m));
@@ -339,24 +493,24 @@ async function addEntry(){
   if(!desc||!val||val<=0||!dateRaw){toast('Preencha todos os campos.');return;}
   const [y,m,day]=dateRaw.split('-');
   const btn=document.getElementById('btn-submit');
-  btn.disabled=true; btn.innerHTML='<span class="spinner"></span>';
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';
   const {data,error}=await sb.from('entries').insert([{
-    user_id:curUser.id, description:desc, value:val, category:cat,
-    type:curType, entry_date:`${day}/${m}/${y}`, month_key:`${y}-${m}`
+    user_id:curUser.id,description:desc,value:val,category:cat,
+    type:curType,entry_date:`${day}/${m}/${y}`,month_key:`${y}-${m}`
   }]).select();
-  btn.disabled=false; btn.innerHTML='+ Adicionar';
+  btn.disabled=false;btn.innerHTML='+ Adicionar';
   if(error){toast('Erro: '+error.message);return;}
   allEntries=[data[0],...allEntries];
   document.getElementById('f-desc').value='';
   document.getElementById('f-val').value='';
-  toast('Lançamento salvo!'); render();
+  toast('Lançamento salvo!');render();
 }
 
 async function deleteEntry(id){
   const {error}=await sb.from('entries').delete().eq('id',id).eq('user_id',curUser.id);
   if(error){toast('Erro ao deletar.');return;}
   allEntries=allEntries.filter(e=>e.id!==id);
-  toast('Removido.'); render();
+  toast('Removido.');render();
 }
 
 function render(){
@@ -366,13 +520,12 @@ function render(){
   const totalOut=arr.filter(e=>e.type==='g').reduce((s,e)=>s+Number(e.value),0);
   const balance=totalIn-totalOut;
   const pct=totalIn>0?Math.round((totalOut/totalIn)*100):0;
-
   document.getElementById('kpi-in').textContent=fmt(totalIn);
   document.getElementById('kpi-in-n').textContent=arr.filter(e=>e.type==='e').length+' lançamentos';
   document.getElementById('kpi-out').textContent=fmt(totalOut);
   document.getElementById('kpi-out-n').textContent=arr.filter(e=>e.type==='g').length+' lançamentos';
   const balEl=document.getElementById('kpi-bal');
-  balEl.textContent=fmt(balance); balEl.className='kpi-value '+(balance>=0?'c-green':'c-red');
+  balEl.textContent=fmt(balance);balEl.className='kpi-value '+(balance>=0?'c-green':'c-red');
   const pctSub=document.getElementById('kpi-pct-sub');
   document.getElementById('kpi-pct').textContent=pct+'%';
   pctSub.textContent=pct>100?'⚠ Gastos acima da renda!':'do total de entradas';
@@ -380,7 +533,6 @@ function render(){
   const bf=document.getElementById('kpi-bar-fill');
   bf.style.width=(totalIn>0?Math.max(0,Math.min(100,Math.round((balance/totalIn)*100))):0)+'%';
   bf.style.background=balance>=0?'var(--green)':'var(--red)';
-
   const tbody=document.getElementById('entry-body');
   tbody.innerHTML=arr.length===0
     ?'<tr><td colspan="6" class="empty-row">Nenhum lançamento neste mês</td></tr>'
@@ -392,7 +544,6 @@ function render(){
       <td style="font-weight:500;color:${e.type==='e'?'var(--green)':'var(--red)'};font-family:'DM Mono',monospace">${e.type==='e'?'+':'-'}${fmt(e.value)}</td>
       <td><button class="del" onclick="deleteEntry(${e.id})">×</button></td>
     </tr>`).join('');
-
   const cats={};
   arr.filter(e=>e.type==='g').forEach(e=>{cats[e.category]=(cats[e.category]||0)+Number(e.value);});
   const sorted=Object.entries(cats).sort((a,b)=>b[1]-a[1]).slice(0,6);
@@ -404,7 +555,6 @@ function render(){
       <div class="cat-track"><div class="cat-fill" style="width:${Math.round((val/maxCat)*100)}%;background:${CAT_COLORS[name]||'#7a7f9a'}"></div></div>
       <div class="cat-amt">${fmt(val)}</div>
     </div>`).join('');
-
   renderTrend();
 }
 
@@ -432,6 +582,130 @@ function renderTrend(){
       }
     }
   });
+}
+
+// ADMIN
+function goAdmin(){
+  if(!isAdmin()){toast('Acesso negado.');return;}
+  const saved=localStorage.getItem('ff_service_key');
+  if(saved){initAdminClient(saved);show('admin-screen');loadAdminData();}
+  else{show('service-key-screen');}
+}
+
+function saveServiceKey(){
+  const key=document.getElementById('service-key-input').value.trim();
+  if(!key){alert('Cole a service_role key.');return;}
+  localStorage.setItem('ff_service_key',key);
+  initAdminClient(key);
+  show('admin-screen');
+  loadAdminData();
+}
+
+function initAdminClient(serviceKey){
+  const url=localStorage.getItem('ff_url');
+  sbAdmin=window.supabase.createClient(url,serviceKey,{auth:{autoRefreshToken:false,persistSession:false}});
+}
+
+async function loadAdminData(){
+  if(!sbAdmin){toast('Cliente admin não inicializado.');return;}
+  document.getElementById('user-list').innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:24px 0">Carregando...</div>';
+  try{
+    const {data,error}=await sbAdmin.auth.admin.listUsers();
+    if(error){toast('Erro: '+error.message);return;}
+    const users=data.users||[];
+    document.getElementById('stat-users').textContent=users.length;
+    const {count}=await sbAdmin.from('entries').select('*',{count:'exact',head:true});
+    document.getElementById('stat-entries').textContent=count||0;
+    if(users.length>0){
+      const latest=users.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at))[0];
+      document.getElementById('stat-last').textContent=new Date(latest.created_at).toLocaleDateString('pt-BR');
+    }
+    document.getElementById('user-count').textContent=users.length+' usuário(s)';
+    document.getElementById('user-list').innerHTML=users.length===0
+      ?'<div style="color:var(--muted);font-size:12px;text-align:center;padding:24px 0">Nenhum usuário cadastrado</div>'
+      :users.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).map(u=>{
+        const name=u.user_metadata?.name||'—';
+        const created=new Date(u.created_at).toLocaleDateString('pt-BR');
+        const initials=(name==='—'?u.email[0]:name[0]).toUpperCase();
+        const adminBadge=u.email===ADMIN_EMAIL?'<span class="pill pill-admin" style="margin-left:6px">admin</span>':'';
+        return `<div class="user-row">
+          <div class="user-avatar">${initials}</div>
+          <div class="user-info">
+            <div class="user-email">${u.email}${adminBadge}</div>
+            <div class="user-meta">Nome: ${name} · Cadastro: ${created}</div>
+          </div>
+          <div class="user-actions">
+            <button class="btn-action warn" onclick="openResetModal('${u.id}','${u.email}')">🔑 Senha</button>
+            ${u.email!==ADMIN_EMAIL?`<button class="btn-action danger" onclick="openDeleteModal('${u.id}','${u.email}')">× Deletar</button>`:''}
+          </div>
+        </div>`;
+      }).join('');
+  }catch(e){toast('Erro ao carregar usuários: '+e.message);}
+}
+
+async function createUser(){
+  const name=document.getElementById('new-name').value.trim();
+  const email=document.getElementById('new-email').value.trim();
+  const pass=document.getElementById('new-pass').value;
+  const errEl=document.getElementById('create-error');
+  const sucEl=document.getElementById('create-success');
+  errEl.style.display='none';sucEl.style.display='none';
+  if(!email||!pass){errEl.textContent='Preencha e-mail e senha.';errEl.style.display='block';return;}
+  if(pass.length<6){errEl.textContent='Senha deve ter pelo menos 6 caracteres.';errEl.style.display='block';return;}
+  const btn=document.getElementById('btn-create-user');
+  btn.disabled=true;btn.innerHTML='<span class="spinner" style="border-top-color:#fff"></span>';
+  const {data,error}=await sbAdmin.auth.admin.createUser({
+    email,password:pass,email_confirm:true,
+    user_metadata:{name:name||email.split('@')[0]}
+  });
+  btn.disabled=false;btn.textContent='+ Criar';
+  if(error){errEl.textContent=error.message;errEl.style.display='block';return;}
+  sucEl.textContent='Usuário '+email+' criado com sucesso!';sucEl.style.display='block';
+  document.getElementById('new-name').value='';
+  document.getElementById('new-email').value='';
+  document.getElementById('new-pass').value='';
+  loadAdminData();
+}
+
+// MODAL
+function openResetModal(uid,email){
+  modalAction='reset';modalTargetId=uid;
+  document.getElementById('modal-title').textContent='Redefinir senha';
+  document.getElementById('modal-sub').textContent='Defina uma nova senha para '+email;
+  document.getElementById('modal-input-wrap').style.display='flex';
+  document.getElementById('modal-input').value='';
+  document.getElementById('modal-confirm-btn').textContent='Salvar senha';
+  document.getElementById('modal-confirm-btn').className='modal-confirm amber';
+  document.getElementById('modal').classList.add('open');
+}
+
+function openDeleteModal(uid,email){
+  modalAction='delete';modalTargetId=uid;
+  document.getElementById('modal-title').textContent='Deletar usuário';
+  document.getElementById('modal-sub').textContent='Tem certeza que deseja deletar o usuário '+email+'? Todos os lançamentos serão apagados permanentemente.';
+  document.getElementById('modal-input-wrap').style.display='none';
+  document.getElementById('modal-confirm-btn').textContent='Deletar permanentemente';
+  document.getElementById('modal-confirm-btn').className='modal-confirm';
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal(){document.getElementById('modal').classList.remove('open');modalAction=null;modalTargetId=null;}
+
+async function confirmModal(){
+  if(!modalAction||!modalTargetId)return;
+  const btn=document.getElementById('modal-confirm-btn');
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';
+  if(modalAction==='reset'){
+    const newPass=document.getElementById('modal-input').value;
+    if(!newPass||newPass.length<6){toast('Senha deve ter pelo menos 6 caracteres.');btn.disabled=false;btn.textContent='Salvar senha';return;}
+    const {error}=await sbAdmin.auth.admin.updateUserById(modalTargetId,{password:newPass});
+    if(error){toast('Erro: '+error.message);}else{toast('Senha redefinida com sucesso!');closeModal();}
+  }else if(modalAction==='delete'){
+    await sbAdmin.from('entries').delete().eq('user_id',modalTargetId);
+    const {error}=await sbAdmin.auth.admin.deleteUser(modalTargetId);
+    if(error){toast('Erro: '+error.message);}else{toast('Usuário deletado.');closeModal();loadAdminData();}
+  }
+  btn.disabled=false;btn.textContent=modalAction==='reset'?'Salvar senha':'Deletar permanentemente';
 }
 
 // BOOT
