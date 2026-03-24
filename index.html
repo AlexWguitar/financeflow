@@ -18,14 +18,12 @@
   --blue:#5b8dee;--blue-dim:rgba(91,141,238,0.12);
   --amber:#f5a623;--amber-dim:rgba(245,166,35,0.12);
   --purple:#9b7fe8;--purple-dim:rgba(155,127,232,0.12);
-  --teal:#26c6da;--teal-dim:rgba(38,198,218,0.12);
 }
 html{font-size:14px;}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;}
 
-/* SCREENS */
-#setup-screen,#auth-screen,#service-key-screen{display:none;align-items:center;justify-content:center;min-height:100vh;padding:24px;}
-#setup-screen{display:flex;}
+#auth-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;}
+#service-key-screen{display:none;align-items:center;justify-content:center;min-height:100vh;padding:24px;}
 #main-app{display:none;}
 
 .center-card{background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:40px;max-width:440px;width:100%;}
@@ -35,7 +33,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .note{background:var(--blue-dim);border:1px solid rgba(91,141,238,0.2);border-radius:8px;padding:12px 14px;font-size:12px;color:#8ab4f8;margin-bottom:20px;line-height:1.7;}
 .note code{font-family:'DM Mono',monospace;background:rgba(91,141,238,0.2);padding:1px 5px;border-radius:3px;}
 
-/* FORMS */
 .fg{display:flex;flex-direction:column;gap:4px;margin-bottom:14px;}
 .fg label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;}
 .fg input,.fg select{background:var(--bg);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:10px 12px;font-size:13px;outline:none;font-family:'DM Sans',sans-serif;transition:border-color 0.15s;width:100%;}
@@ -52,7 +49,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .btn-primary:disabled{opacity:0.5;cursor:not-allowed;}
 .link-btn{background:none;border:none;color:var(--blue);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:14px;width:100%;text-align:center;}
 
-/* AUTH */
 .auth-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:22px;}
 .auth-tab{flex:1;padding:10px;text-align:center;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.15s;}
 .auth-tab.active{color:var(--blue);border-bottom-color:var(--blue);}
@@ -60,7 +56,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .msg-error{background:var(--red-dim);border:1px solid rgba(224,92,92,0.25);color:var(--red);}
 .msg-success{background:var(--green-dim);border:1px solid rgba(39,201,138,0.25);color:var(--green);}
 
-/* TOPBAR */
 .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
 .logo{font-size:16px;font-weight:600;color:var(--blue);}
 .logo span{color:var(--text);font-weight:400;}
@@ -75,8 +70,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .btn-tb.amber{color:var(--amber);border-color:rgba(245,166,35,0.3);background:var(--amber-dim);}
 .btn-tb.logout:hover{color:var(--red);border-color:rgba(224,92,92,0.4);}
 
-/* PAGE TABS */
-.page-tabs{background:var(--surface);border-bottom:1px solid var(--border);display:flex;padding:0 20px;gap:4px;}
+.page-tabs{background:var(--surface);border-bottom:1px solid var(--border);display:flex;padding:0 20px;gap:4px;overflow-x:auto;}
 .page-tab{padding:10px 16px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.15s;white-space:nowrap;}
 .page-tab.active{color:var(--blue);border-bottom-color:var(--blue);}
 
@@ -84,7 +78,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .page.active{display:block;}
 .wrap{padding:20px;max-width:1300px;margin:0 auto;}
 
-/* KPIs */
 .kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;}
 .kpi{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
 .kpi-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:8px;}
@@ -92,20 +85,14 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .kpi-sub{font-size:11px;color:var(--muted);margin-top:6px;}
 .kpi-bar{margin-top:10px;height:3px;background:var(--bg);border-radius:2px;overflow:hidden;}
 .kpi-bar-fill{height:100%;border-radius:2px;transition:width 0.6s;}
-.c-green{color:var(--green);}.c-red{color:var(--red);}.c-blue{color:var(--blue);}.c-amber{color:var(--amber);}.c-purple{color:var(--purple);}.c-teal{color:var(--teal);}
+.c-green{color:var(--green);}.c-red{color:var(--red);}.c-blue{color:var(--blue);}.c-amber{color:var(--amber);}.c-purple{color:var(--purple);}
 
-/* GRID */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;}
-.grid-2-1{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:14px;}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
 .card-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
-.card-title-btn{background:var(--blue-dim);border:1px solid rgba(91,141,238,0.2);color:var(--blue);border-radius:6px;padding:3px 10px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;}
-.card-title-btn:hover{opacity:0.85;}
-.card-title-btn.green{background:var(--green-dim);border-color:rgba(39,201,138,0.2);color:var(--green);}
+.card-title-btn{border:1px solid rgba(91,141,238,0.2);background:var(--blue-dim);color:var(--blue);border-radius:6px;padding:3px 10px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;}
 .card-title-btn.purple{background:var(--purple-dim);border-color:rgba(155,127,232,0.2);color:var(--purple);}
 
-/* ENTRY FORM */
 .type-toggle{display:flex;gap:6px;margin-bottom:14px;}
 .type-btn{flex:1;padding:8px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
 .type-btn.active-g{background:var(--red-dim);border-color:rgba(224,92,92,0.3);color:var(--red);}
@@ -117,7 +104,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .btn-submit.green{background:var(--green);}
 .btn-submit:disabled{opacity:0.5;cursor:not-allowed;}
 
-/* TABLE */
 .table-wrap{overflow-y:auto;max-height:260px;}
 .table-wrap::-webkit-scrollbar{width:4px;}
 .table-wrap::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
@@ -129,29 +115,24 @@ tbody tr:last-child td{border-bottom:none;}
 .pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:500;}
 .pill-e{background:var(--green-dim);color:var(--green);}
 .pill-g{background:var(--red-dim);color:var(--red);}
-.pill-f{background:var(--amber-dim);color:var(--amber);}
-.pill-i{background:var(--purple-dim);color:var(--purple);}
 .del{background:none;border:none;color:var(--muted2);cursor:pointer;font-size:15px;padding:0 4px;}
 .del:hover{color:var(--red);}
 .empty-row{text-align:center;color:var(--muted);padding:28px 0 !important;font-size:12px;}
 
-/* CAT BARS */
 .cat-item{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
 .cat-name{font-size:12px;min-width:90px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .cat-track{flex:1;height:5px;background:var(--bg);border-radius:3px;overflow:hidden;}
 .cat-fill{height:100%;border-radius:3px;transition:width 0.5s;}
 .cat-amt{font-size:11px;color:var(--muted);min-width:70px;text-align:right;font-family:'DM Mono',monospace;}
 
-/* TIMELINE */
 .timeline-wrap{overflow-x:auto;padding-bottom:8px;}
 .timeline-wrap::-webkit-scrollbar{height:4px;}
 .timeline-wrap::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
-.timeline-grid{display:grid;min-width:max-content;gap:0;}
 .tl-header{display:flex;gap:2px;margin-bottom:6px;}
 .tl-month{min-width:64px;text-align:center;font-size:10px;color:var(--muted);padding:4px 2px;font-weight:500;}
 .tl-month.current{color:var(--blue);font-weight:600;}
 .tl-row{display:flex;gap:2px;margin-bottom:4px;align-items:center;}
-.tl-label{min-width:120px;font-size:11px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:8px;}
+.tl-label{min-width:130px;font-size:11px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:8px;}
 .tl-cell{min-width:64px;height:24px;border-radius:4px;background:var(--bg);}
 .tl-cell.active-expense{background:rgba(224,92,92,0.25);border:1px solid rgba(224,92,92,0.3);}
 .tl-cell.active-invest{background:rgba(155,127,232,0.25);border:1px solid rgba(155,127,232,0.3);}
@@ -159,12 +140,9 @@ tbody tr:last-child td{border-bottom:none;}
 .tl-total-row{display:flex;gap:2px;margin-top:6px;border-top:1px solid var(--border);padding-top:6px;}
 .tl-total-cell{min-width:64px;height:20px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:'DM Mono',monospace;font-weight:500;}
 
-/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.65);display:none;align-items:center;justify-content:center;z-index:200;padding:24px;}
 .modal-overlay.open{display:flex;}
 .modal{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:28px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;}
-.modal::-webkit-scrollbar{width:4px;}
-.modal::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
 .modal-title{font-size:16px;font-weight:600;margin-bottom:4px;}
 .modal-sub{font-size:13px;color:var(--muted);margin-bottom:22px;}
 .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
@@ -175,52 +153,34 @@ tbody tr:last-child td{border-bottom:none;}
 .modal-save{background:var(--blue);color:#fff;}
 .modal-save:hover{opacity:0.85;}
 .modal-save:disabled{opacity:0.5;cursor:not-allowed;}
-.modal-save.green{background:var(--green);}
 .modal-save.purple{background:var(--purple);}
 
-/* RESUMO GERENCIAL */
 .report-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
 .report-tab{padding:6px 14px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);color:var(--muted);background:transparent;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
 .report-tab.active{background:var(--blue);color:#fff;border-color:var(--blue);}
-
 .matrix-wrap{overflow-x:auto;}
 .matrix-wrap::-webkit-scrollbar{height:4px;}
 .matrix-wrap::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
 .matrix-table{border-collapse:collapse;font-size:12px;min-width:600px;width:100%;}
-.matrix-table th{background:var(--surface2);color:var(--muted);font-weight:500;padding:8px 12px;text-align:right;font-size:11px;text-transform:uppercase;letter-spacing:0.3px;border-bottom:1px solid var(--border);}
+.matrix-table th{background:var(--surface2);color:var(--muted);font-weight:500;padding:8px 12px;text-align:right;font-size:11px;text-transform:uppercase;border-bottom:1px solid var(--border);}
 .matrix-table th:first-child{text-align:left;}
 .matrix-table td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.03);text-align:right;font-family:'DM Mono',monospace;font-size:12px;}
-.matrix-table td:first-child{text-align:left;font-family:'DM Sans',sans-serif;color:var(--text);}
+.matrix-table td:first-child{text-align:left;font-family:'DM Sans',sans-serif;}
 .matrix-table tr:hover td{background:rgba(255,255,255,0.02);}
 .matrix-table tr:last-child td{border-bottom:none;}
-.matrix-table .total-row td{font-weight:600;border-top:1px solid var(--border);border-bottom:none;color:var(--text);}
-.positive{color:var(--green);}
-.negative{color:var(--red);}
-.neutral{color:var(--muted);}
+.matrix-table .total-row td{font-weight:600;border-top:1px solid var(--border);border-bottom:none;}
+.positive{color:var(--green);}.negative{color:var(--red);}.neutral{color:var(--muted);}
 
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.2);border-top-color:#fff;border-radius:50%;animation:spin 0.6s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 #toast{position:fixed;bottom:24px;right:24px;background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:10px 16px;border-radius:8px;font-size:13px;opacity:0;transition:opacity 0.2s;z-index:999;pointer-events:none;}
 #toast.show{opacity:1;}
 
-@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr);}.grid-2,.grid-2-1,.grid-3{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr 1fr;}.modal-grid{grid-template-columns:1fr;}}
+@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr);}.grid-2{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr 1fr;}.modal-grid{grid-template-columns:1fr;}}
 @media(max-width:500px){.kpi-grid{grid-template-columns:repeat(2,1fr);}.form-row{grid-template-columns:1fr;}.form-row2{grid-template-columns:1fr;}.topbar{padding:0 12px;}.wrap{padding:12px;}.user-badge{display:none;}.month-label{min-width:90px;font-size:12px;}}
 </style>
 </head>
 <body>
-
-<!-- SETUP -->
-<div id="setup-screen">
-  <div class="center-card">
-    <div class="card-logo">Finance<span>Flow</span></div>
-    <p class="card-sub">Insira as credenciais do seu projeto Supabase.</p>
-    <div class="note">No Supabase vá em <code>Settings → API</code> e copie:<br>• <strong>Project URL</strong><br>• <strong>anon public key</strong></div>
-    <div class="fg"><label>Supabase Project URL</label><input type="text" id="sb-url" placeholder="https://xxxxxxxx.supabase.co"/></div>
-    <div class="fg"><label>Supabase Anon Key</label><input type="text" id="sb-key" placeholder="eyJhbGciOiJI..."/></div>
-    <button class="btn-primary" onclick="initSupabase()">Conectar →</button>
-    <p style="margin-top:14px;font-size:11px;color:var(--muted2);text-align:center">Credenciais salvas no navegador</p>
-  </div>
-</div>
 
 <!-- AUTH -->
 <div id="auth-screen">
@@ -237,7 +197,6 @@ tbody tr:last-child td{border-bottom:none;}
     <div class="fg"><label>Senha</label><input type="password" id="auth-password" placeholder="••••••••"/></div>
     <div class="fg" id="fg-name" style="display:none"><label>Seu nome</label><input type="text" id="auth-name" placeholder="Ex: João"/></div>
     <button class="btn-primary" id="auth-btn" onclick="doAuth()">Entrar</button>
-    <button class="link-btn" onclick="resetSetup()">← Alterar configurações do Supabase</button>
   </div>
 </div>
 
@@ -249,7 +208,7 @@ tbody tr:last-child td{border-bottom:none;}
     <div class="note">Vá em <code>Settings → API</code> e copie a chave <strong>service_role</strong>.</div>
     <div class="fg"><label>Service Role Key</label><input type="password" id="service-key-input" placeholder="eyJhbGciOiJI..."/></div>
     <button class="btn-primary" style="background:var(--amber)" onclick="saveServiceKey()">Entrar no painel admin →</button>
-    <button class="link-btn" onclick="showPage('dashboard')">← Voltar ao app</button>
+    <button class="link-btn" onclick="showScreen('main-app')">← Voltar ao app</button>
   </div>
 </div>
 
@@ -268,7 +227,6 @@ tbody tr:last-child td{border-bottom:none;}
       <button class="btn-tb logout" onclick="doLogout()">Sair</button>
     </div>
   </div>
-
   <div class="page-tabs">
     <div class="page-tab active" onclick="switchPage('dashboard')">Dashboard</div>
     <div class="page-tab" onclick="switchPage('fixos')">Gastos Fixos</div>
@@ -276,15 +234,14 @@ tbody tr:last-child td{border-bottom:none;}
     <div class="page-tab" onclick="switchPage('resumo')">Resumo Gerencial</div>
   </div>
 
-  <!-- PAGE: DASHBOARD -->
+  <!-- DASHBOARD -->
   <div class="page active" id="page-dashboard">
     <div class="wrap">
       <div class="kpi-grid">
         <div class="kpi"><div class="kpi-label">Entradas</div><div class="kpi-value c-green" id="kpi-in">R$ 0</div><div class="kpi-sub" id="kpi-in-n">0 lançamentos</div></div>
-        <div class="kpi"><div class="kpi-label">Saídas totais</div><div class="kpi-value c-red" id="kpi-out">R$ 0</div><div class="kpi-sub" id="kpi-out-detail">lançamentos + fixos + invest.</div></div>
+        <div class="kpi"><div class="kpi-label">Saídas totais</div><div class="kpi-value c-red" id="kpi-out">R$ 0</div><div class="kpi-sub" id="kpi-out-detail">—</div></div>
         <div class="kpi"><div class="kpi-label">Saldo do mês</div><div class="kpi-value" id="kpi-bal">R$ 0</div><div class="kpi-bar"><div class="kpi-bar-fill" id="kpi-bar-fill"></div></div></div>
       </div>
-
       <div class="grid-2">
         <div class="card">
           <div class="card-title">Novo lançamento</div>
@@ -312,88 +269,69 @@ tbody tr:last-child td{border-bottom:none;}
         </div>
         <div class="card"><div class="card-title">Gastos por categoria</div><div id="cat-list"></div></div>
       </div>
-
       <div class="grid-2">
         <div class="card">
           <div class="card-title">Lançamentos do mês</div>
           <div class="table-wrap">
-            <table>
-              <thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Tipo</th><th>Valor</th><th></th></tr></thead>
-              <tbody id="entry-body"></tbody>
-            </table>
+            <table><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Tipo</th><th>Valor</th><th></th></tr></thead>
+            <tbody id="entry-body"></tbody></table>
           </div>
         </div>
         <div class="card">
           <div class="card-title">Déficit / Superávit — últimos 6 meses</div>
-          <div style="position:relative;width:100%;height:220px;"><canvas id="deficitChart"></canvas></div>
+          <div style="position:relative;width:100%;height:210px;"><canvas id="deficitChart"></canvas></div>
           <div style="display:flex;gap:12px;margin-top:10px;font-size:11px;color:var(--muted);flex-wrap:wrap;">
             <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#27c98a;display:inline-block"></span>Entradas</span>
             <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#e05c5c;display:inline-block"></span>Lançamentos</span>
-            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#f5a623;display:inline-block"></span>Gastos Fixos</span>
-            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#9b7fe8;display:inline-block"></span>Investimentos</span>
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#f5a623;display:inline-block"></span>Fixos</span>
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#9b7fe8;display:inline-block"></span>Invest.</span>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- PAGE: GASTOS FIXOS -->
+  <!-- GASTOS FIXOS -->
   <div class="page" id="page-fixos">
     <div class="wrap">
       <div class="grid-2">
         <div class="card">
-          <div class="card-title">
-            <span>Gastos fixos cadastrados</span>
-            <button class="card-title-btn" onclick="openModal('fixo')">+ Novo gasto fixo</button>
-          </div>
+          <div class="card-title"><span>Gastos fixos</span><button class="card-title-btn" onclick="openModal('fixo')">+ Novo</button></div>
           <div class="table-wrap">
-            <table>
-              <thead><tr><th>Descrição</th><th>Categoria</th><th>Valor/mês</th><th>Vence dia</th><th>Progresso</th><th></th></tr></thead>
-              <tbody id="fixos-body"></tbody>
-            </table>
+            <table><thead><tr><th>Descrição</th><th>Categoria</th><th>Valor/mês</th><th>Vence</th><th>Progresso</th><th></th></tr></thead>
+            <tbody id="fixos-body"></tbody></table>
           </div>
         </div>
         <div class="card">
-          <div class="card-title">Comprometimento mensal fixo</div>
+          <div class="card-title">Comprometimento — próximos 12 meses</div>
           <div style="position:relative;width:100%;height:220px;"><canvas id="fixosChart"></canvas></div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-title">Linha do tempo — gastos fixos</div>
-        <div class="timeline-wrap"><div id="fixos-timeline"></div></div>
-      </div>
+      <div class="card"><div class="card-title">Linha do tempo — gastos fixos</div><div class="timeline-wrap"><div id="fixos-timeline"></div></div></div>
     </div>
   </div>
 
-  <!-- PAGE: INVESTIMENTOS -->
+  <!-- INVESTIMENTOS -->
   <div class="page" id="page-investimentos">
     <div class="wrap">
       <div class="grid-2">
         <div class="card">
-          <div class="card-title">
-            <span>Investimentos cadastrados</span>
-            <button class="card-title-btn purple" onclick="openModal('invest')">+ Novo investimento</button>
-          </div>
+          <div class="card-title"><span>Investimentos</span><button class="card-title-btn purple" onclick="openModal('invest')">+ Novo</button></div>
           <div class="table-wrap">
-            <table>
-              <thead><tr><th>Descrição</th><th>Objetivo</th><th>Valor/mês</th><th>Meses</th><th>Progresso</th><th></th></tr></thead>
-              <tbody id="invest-body"></tbody>
-            </table>
+            <table><thead><tr><th>Descrição</th><th>Objetivo</th><th>Valor/mês</th><th>Meses</th><th>Progresso</th><th></th></tr></thead>
+            <tbody id="invest-body"></tbody></table>
           </div>
         </div>
         <div class="card">
-          <div class="card-title">Alocação mensal em investimentos</div>
+          <div class="card-title">Alocação — próximos 12 meses</div>
           <div style="position:relative;width:100%;height:220px;"><canvas id="investChart"></canvas></div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-title">Linha do tempo — investimentos</div>
-        <div class="timeline-wrap"><div id="invest-timeline"></div></div>
-      </div>
+      <div class="card"><div class="card-title">Linha do tempo — investimentos</div><div class="timeline-wrap"><div id="invest-timeline"></div></div></div>
     </div>
   </div>
 
-  <!-- PAGE: RESUMO GERENCIAL -->
+  <!-- RESUMO GERENCIAL -->
   <div class="page" id="page-resumo">
     <div class="wrap">
       <div class="report-tabs">
@@ -401,56 +339,36 @@ tbody tr:last-child td{border-bottom:none;}
         <button class="report-tab" onclick="switchReport('categoria')">Por Categoria</button>
         <button class="report-tab" onclick="switchReport('evolucao')">Evolução Anual</button>
       </div>
-      <div id="report-mensal" class="report-view">
-        <div class="card">
-          <div class="card-title">Resumo mensal — entradas e saídas</div>
-          <div class="matrix-wrap"><table class="matrix-table" id="monthly-matrix"></table></div>
-        </div>
-      </div>
-      <div id="report-categoria" class="report-view" style="display:none">
-        <div class="card">
-          <div class="card-title">Saídas por categoria ao longo dos meses</div>
-          <div class="matrix-wrap"><table class="matrix-table" id="cat-matrix"></table></div>
-        </div>
-      </div>
-      <div id="report-evolucao" class="report-view" style="display:none">
-        <div class="card">
-          <div class="card-title">Evolução anual — entradas vs saídas totais</div>
-          <div style="position:relative;width:100%;height:300px;"><canvas id="evolucaoChart"></canvas></div>
-        </div>
-      </div>
+      <div id="report-mensal"><div class="card"><div class="card-title">Resumo mensal</div><div class="matrix-wrap"><table class="matrix-table" id="monthly-matrix"></table></div></div></div>
+      <div id="report-categoria" style="display:none"><div class="card"><div class="card-title">Saídas por categoria</div><div class="matrix-wrap"><table class="matrix-table" id="cat-matrix"></table></div></div></div>
+      <div id="report-evolucao" style="display:none"><div class="card"><div class="card-title">Evolução anual</div><div style="position:relative;width:100%;height:300px;"><canvas id="evolucaoChart"></canvas></div></div></div>
     </div>
   </div>
 </div>
 
-<!-- MODAL GASTO FIXO -->
+<!-- MODAL FIXO -->
 <div class="modal-overlay" id="modal-fixo">
   <div class="modal">
     <div class="modal-title">Novo gasto fixo</div>
     <div class="modal-sub">Empréstimos, financiamentos, assinaturas recorrentes</div>
     <div class="fg"><label>Descrição</label><input type="text" id="mf-desc" placeholder="Ex: Financiamento carro"/></div>
     <div class="modal-grid">
-      <div class="fg"><label>Categoria</label>
-        <select id="mf-cat">
-          <option>Moradia</option><option>Transporte</option><option>Saúde</option>
-          <option>Educação</option><option>Alimentação</option><option>Lazer</option><option>Outros</option>
-        </select>
-      </div>
+      <div class="fg"><label>Categoria</label><select id="mf-cat"><option>Moradia</option><option>Transporte</option><option>Saúde</option><option>Educação</option><option>Alimentação</option><option>Lazer</option><option>Outros</option></select></div>
       <div class="fg"><label>Valor por mês (R$)</label><input type="number" id="mf-val" placeholder="0,00" min="0" step="0.01"/></div>
-      <div class="fg"><label>Nº de meses total</label><input type="number" id="mf-months" placeholder="Ex: 48" min="1"/></div>
-      <div class="fg"><label>Meses já pagos</label><input type="number" id="mf-paid" placeholder="Ex: 0" min="0" value="0"/></div>
+      <div class="fg"><label>Total de meses</label><input type="number" id="mf-months" placeholder="Ex: 48" min="1"/></div>
+      <div class="fg"><label>Meses já pagos</label><input type="number" id="mf-paid" placeholder="0" min="0" value="0"/></div>
       <div class="fg"><label>Dia de vencimento</label><input type="number" id="mf-day" placeholder="Ex: 15" min="1" max="31"/></div>
-      <div class="fg"><label>Mês de início (AAAA-MM)</label><input type="month" id="mf-start"/></div>
+      <div class="fg"><label>Mês de início</label><input type="month" id="mf-start"/></div>
     </div>
     <div class="msg-box msg-error" id="mf-error"></div>
     <div class="modal-actions">
       <button class="modal-cancel" onclick="closeModal('fixo')">Cancelar</button>
-      <button class="modal-save" id="mf-save" onclick="saveFixo()">Salvar gasto fixo</button>
+      <button class="modal-save" id="mf-save" onclick="saveFixo()">Salvar</button>
     </div>
   </div>
 </div>
 
-<!-- MODAL INVESTIMENTO -->
+<!-- MODAL INVEST -->
 <div class="modal-overlay" id="modal-invest">
   <div class="modal">
     <div class="modal-title">Novo investimento / plano</div>
@@ -459,27 +377,14 @@ tbody tr:last-child td{border-bottom:none;}
     <div class="fg"><label>Objetivo / meta</label><input type="text" id="mi-goal" placeholder="Ex: R$ 30.000 em 24 meses"/></div>
     <div class="modal-grid">
       <div class="fg"><label>Valor por mês (R$)</label><input type="number" id="mi-val" placeholder="0,00" min="0" step="0.01"/></div>
-      <div class="fg"><label>Nº de meses</label><input type="number" id="mi-months" placeholder="Ex: 24" min="1"/></div>
-      <div class="fg"><label>Meses já feitos</label><input type="number" id="mi-done" placeholder="Ex: 0" min="0" value="0"/></div>
-      <div class="fg"><label>Mês de início (AAAA-MM)</label><input type="month" id="mi-start"/></div>
+      <div class="fg"><label>Total de meses</label><input type="number" id="mi-months" placeholder="Ex: 24" min="1"/></div>
+      <div class="fg"><label>Meses já feitos</label><input type="number" id="mi-done" placeholder="0" min="0" value="0"/></div>
+      <div class="fg"><label>Mês de início</label><input type="month" id="mi-start"/></div>
     </div>
     <div class="msg-box msg-error" id="mi-error"></div>
     <div class="modal-actions">
       <button class="modal-cancel" onclick="closeModal('invest')">Cancelar</button>
-      <button class="modal-save purple" id="mi-save" onclick="saveInvest()">Salvar investimento</button>
-    </div>
-  </div>
-</div>
-
-<!-- ADMIN MODAL CONFIRM -->
-<div class="modal-overlay" id="modal-confirm">
-  <div class="modal" style="max-width:380px;">
-    <div class="modal-title" id="mc-title">Confirmar</div>
-    <div class="modal-sub" id="mc-sub"></div>
-    <div class="fg" id="mc-input-wrap" style="display:none"><label id="mc-label">Nova senha</label><input type="password" id="mc-input" placeholder="Mínimo 6 caracteres"/></div>
-    <div class="modal-actions">
-      <button class="modal-cancel" onclick="closeModal('confirm')">Cancelar</button>
-      <button class="modal-save" id="mc-btn" onclick="confirmModalAction()">Confirmar</button>
+      <button class="modal-save purple" id="mi-save" onclick="saveInvest()">Salvar</button>
     </div>
   </div>
 </div>
@@ -487,17 +392,21 @@ tbody tr:last-child td{border-bottom:none;}
 <div id="toast"></div>
 
 <script>
+// ── CREDENCIAIS FIXAS ──
+const SB_URL='https://mnhdqdiyybuxjwzdxhha.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uaGRxZGl5eWJ1eGp3emR4aGhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzNTc1ODIsImV4cCI6MjA4OTkzMzU4Mn0._YmX_NxhqRF8fJwDuhx8V_JTz02DWed8AsKobKUjsfs';
 const ADMIN_EMAIL='j.alex.junior@hotmail.com';
+
 const MONTHS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-const MONTHS_SHORT=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const MS=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 const CAT_COLORS={'Alimentação':'#5b8dee','Transporte':'#f5a623','Moradia':'#9b7fe8','Saúde':'#27c98a','Lazer':'#e05c5c','Educação':'#56d4f0','Salário':'#27c98a','Investimento':'#9b7fe8','Outros':'#7a7f9a'};
 
-let sb=null,sbAdmin=null,curUser=null,curType='g';
+const sb=window.supabase.createClient(SB_URL,SB_KEY);
+let sbAdmin=null,curUser=null,curType='g';
 let allEntries=[],allFixos=[],allInvests=[];
 let deficitChart=null,fixosChart=null,investChart=null,evolucaoChart=null;
 let now=new Date(),curMonth=now.getMonth(),curYear=now.getFullYear();
-let authMode='login',curPage='dashboard',curReport='mensal';
-let confirmAction=null,confirmTargetId=null;
+let authMode='login',curReport='mensal';
 
 const fmt=v=>'R$ '+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const fmtK=v=>v>=1000?'R$'+(v/1000).toFixed(1)+'k':'R$'+Math.round(v);
@@ -507,17 +416,15 @@ const isAdmin=()=>curUser&&curUser.email===ADMIN_EMAIL;
 function toast(msg,ms=2500){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),ms);}
 
 function showScreen(id){
-  ['setup-screen','auth-screen','service-key-screen','main-app'].forEach(s=>{
+  ['auth-screen','service-key-screen','main-app'].forEach(s=>{
     const el=document.getElementById(s);
     el.style.display=s===id?(s==='main-app'?'block':'flex'):'none';
   });
 }
 
 function switchPage(p){
-  curPage=p;
   document.querySelectorAll('.page-tab').forEach((t,i)=>{
-    const pages=['dashboard','fixos','investimentos','resumo'];
-    t.className='page-tab'+(pages[i]===p?' active':'');
+    t.className='page-tab'+(['dashboard','fixos','investimentos','resumo'][i]===p?' active':'');
   });
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
@@ -532,24 +439,8 @@ function switchReport(r){
     const rr=t.textContent.includes('Mensal')?'mensal':t.textContent.includes('Categoria')?'categoria':'evolucao';
     t.className='report-tab'+(rr===r?' active':'');
   });
-  document.querySelectorAll('.report-view').forEach(el=>el.style.display='none');
-  document.getElementById('report-'+r).style.display='block';
+  ['mensal','categoria','evolucao'].forEach(rv=>document.getElementById('report-'+rv).style.display=rv===r?'block':'none');
   renderResumo();
-}
-
-// SETUP
-function initSupabase(){
-  const url=document.getElementById('sb-url').value.trim();
-  const key=document.getElementById('sb-key').value.trim();
-  if(!url||!key){alert('Preencha os dois campos.');return;}
-  try{sb=window.supabase.createClient(url,key);localStorage.setItem('ff_url',url);localStorage.setItem('ff_key',key);checkSession();}
-  catch(e){alert('Erro: '+e.message);}
-}
-function resetSetup(){localStorage.removeItem('ff_url');localStorage.removeItem('ff_key');location.reload();}
-
-async function checkSession(){
-  const {data:{session}}=await sb.auth.getSession();
-  if(session){curUser=session.user;enterApp();}else{showScreen('auth-screen');}
 }
 
 function switchAuthTab(mode){
@@ -592,8 +483,7 @@ async function doLogout(){
 }
 
 function enterApp(){
-  const name=curUser.user_metadata?.name||curUser.email;
-  document.getElementById('user-badge').textContent='👤 '+name;
+  document.getElementById('user-badge').textContent='👤 '+(curUser.user_metadata?.name||curUser.email);
   document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
   document.getElementById('admin-btn').style.display=isAdmin()?'block':'none';
   const today=new Date().toISOString().slice(0,7);
@@ -610,33 +500,25 @@ async function loadAll(){
     sb.from('fixed_expenses').select('*').eq('user_id',uid).order('created_at',{ascending:false}),
     sb.from('investments').select('*').eq('user_id',uid).order('created_at',{ascending:false})
   ]);
-  allEntries=r1.data||[];
-  allFixos=r2.data||[];
-  allInvests=r3.data||[];
-  autoInjectFixos();
-  render();
+  allEntries=r1.data||[];allFixos=r2.data||[];allInvests=r3.data||[];
+  autoInjectFixos();render();
 }
 
-// Auto-inject fixed expenses as entries
 function autoInjectFixos(){
   const key=mkKey(curYear,curMonth);
   allFixos.forEach(f=>{
-    const remaining=f.months_total-f.months_paid;
-    if(remaining<=0)return;
-    const startParts=f.start_month.split('-');
-    const startY=parseInt(startParts[0]),startM=parseInt(startParts[1])-1;
-    const startDate=new Date(startY,startM,1);
-    const curDate=new Date(curYear,curMonth,1);
-    if(curDate<startDate)return;
-    const monthsElapsed=((curDate.getFullYear()-startDate.getFullYear())*12)+(curDate.getMonth()-startDate.getMonth());
-    if(monthsElapsed>=f.months_total)return;
+    const sp=f.start_month.split('-');
+    const sY=parseInt(sp[0]),sM=parseInt(sp[1])-1;
+    const start=new Date(sY,sM,1),cur=new Date(curYear,curMonth,1);
+    if(cur<start)return;
+    const elapsed=((cur.getFullYear()-start.getFullYear())*12)+(cur.getMonth()-start.getMonth());
+    if(elapsed>=f.months_total)return;
     const already=allEntries.some(e=>e.fixed_expense_id===f.id&&e.month_key===key);
     if(!already){
       allEntries.unshift({
-        id:'fx_'+f.id+'_'+key,fixed_expense_id:f.id,
-        user_id:curUser.id,description:f.description+' (fixo)',
-        value:f.value,category:f.category,type:'g',
-        entry_date:String(f.due_day).padStart(2,'0')+'/'+key.split('-')[1]+'/'+key.split('-')[0],
+        id:'fx_'+f.id+'_'+key,fixed_expense_id:f.id,user_id:curUser.id,
+        description:f.description+' (fixo)',value:f.value,category:f.category,
+        type:'g',entry_date:String(f.due_day).padStart(2,'0')+'/'+key.split('-')[1]+'/'+key.split('-')[0],
         month_key:key,auto:true
       });
     }
@@ -644,27 +526,11 @@ function autoInjectFixos(){
 }
 
 const entriesFor=(y,m)=>allEntries.filter(e=>e.month_key===mkKey(y,m));
-const fixoActiveInMonth=(f,y,m)=>{
-  const startParts=f.start_month.split('-');
-  const sY=parseInt(startParts[0]),sM=parseInt(startParts[1])-1;
-  const start=new Date(sY,sM,1),cur=new Date(y,m,1);
-  if(cur<start)return false;
-  const elapsed=((cur.getFullYear()-start.getFullYear())*12)+(cur.getMonth()-start.getMonth());
-  return elapsed>=0&&elapsed<f.months_total;
-};
-const investActiveInMonth=(inv,y,m)=>{
-  const startParts=inv.start_month.split('-');
-  const sY=parseInt(startParts[0]),sM=parseInt(startParts[1])-1;
-  const start=new Date(sY,sM,1),cur=new Date(y,m,1);
-  if(cur<start)return false;
-  const elapsed=((cur.getFullYear()-start.getFullYear())*12)+(cur.getMonth()-start.getMonth());
-  return elapsed>=0&&elapsed<inv.months_total;
-};
+const fixoActive=(f,y,m)=>{const sp=f.start_month.split('-');const sY=parseInt(sp[0]),sM=parseInt(sp[1])-1;const start=new Date(sY,sM,1),cur=new Date(y,m,1);if(cur<start)return false;const el=((cur.getFullYear()-start.getFullYear())*12)+(cur.getMonth()-start.getMonth());return el>=0&&el<f.months_total;};
+const investActive=(i,y,m)=>{const sp=i.start_month.split('-');const sY=parseInt(sp[0]),sM=parseInt(sp[1])-1;const start=new Date(sY,sM,1),cur=new Date(y,m,1);if(cur<start)return false;const el=((cur.getFullYear()-start.getFullYear())*12)+(cur.getMonth()-start.getMonth());return el>=0&&el<i.months_total;};
+const fixosTotal=(y,m)=>allFixos.reduce((s,f)=>s+(fixoActive(f,y,m)?Number(f.value):0),0);
+const investTotal=(y,m)=>allInvests.reduce((s,i)=>s+(investActive(i,y,m)?Number(i.value_per_month):0),0);
 
-function fixosTotalForMonth(y,m){return allFixos.reduce((s,f)=>s+(fixoActiveInMonth(f,y,m)?Number(f.value):0),0);}
-function investTotalForMonth(y,m){return allInvests.reduce((s,i)=>s+(investActiveInMonth(i,y,m)?Number(i.value_per_month):0),0);}
-
-// ENTRY
 function setType(t){
   curType=t;
   document.getElementById('btn-g').className='type-btn'+(t==='g'?' active-g':'');
@@ -701,15 +567,14 @@ async function addEntry(){
 }
 
 async function deleteEntry(id){
-  if(String(id).startsWith('fx_')){toast('Lançamento automático — remova o gasto fixo.');return;}
+  if(String(id).startsWith('fx_')){toast('Lançamento automático — remova o gasto fixo para excluir.');return;}
   const {error}=await sb.from('entries').delete().eq('id',id).eq('user_id',curUser.id);
-  if(error){toast('Erro ao deletar.');return;}
+  if(error){toast('Erro.');return;}
   allEntries=allEntries.filter(e=>e.id!==id);toast('Removido.');render();
 }
 
-// FIXOS
-function openModal(type){document.getElementById('modal-'+type).classList.add('open');}
-function closeModal(type){document.getElementById('modal-'+type).classList.remove('open');}
+function openModal(t){document.getElementById('modal-'+t).classList.add('open');}
+function closeModal(t){document.getElementById('modal-'+t).classList.remove('open');}
 
 async function saveFixo(){
   const desc=document.getElementById('mf-desc').value.trim();
@@ -719,26 +584,18 @@ async function saveFixo(){
   const paid=parseInt(document.getElementById('mf-paid').value)||0;
   const day=parseInt(document.getElementById('mf-day').value);
   const start=document.getElementById('mf-start').value;
-  const errEl=document.getElementById('mf-error');
-  errEl.style.display='none';
+  const errEl=document.getElementById('mf-error');errEl.style.display='none';
   if(!desc||!val||!months||!day||!start){errEl.textContent='Preencha todos os campos.';errEl.style.display='block';return;}
   const btn=document.getElementById('mf-save');btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';
-  const {data,error}=await sb.from('fixed_expenses').insert([{
-    user_id:curUser.id,description:desc,category:cat,value:val,
-    months_total:months,months_paid:paid,due_day:day,start_month:start
-  }]).select();
-  btn.disabled=false;btn.textContent='Salvar gasto fixo';
+  const {data,error}=await sb.from('fixed_expenses').insert([{user_id:curUser.id,description:desc,category:cat,value:val,months_total:months,months_paid:paid,due_day:day,start_month:start}]).select();
+  btn.disabled=false;btn.textContent='Salvar';
   if(error){errEl.textContent=error.message;errEl.style.display='block';return;}
-  allFixos=[data[0],...allFixos];
-  closeModal('fixo');toast('Gasto fixo salvo!');
-  autoInjectFixos();render();renderFixosPage();
+  allFixos=[data[0],...allFixos];closeModal('fixo');toast('Gasto fixo salvo!');autoInjectFixos();render();renderFixosPage();
 }
 
 async function deleteFixo(id){
-  const {error}=await sb.from('fixed_expenses').delete().eq('id',id).eq('user_id',curUser.id);
-  if(error){toast('Erro.');return;}
-  allFixos=allFixos.filter(f=>f.id!==id);
-  allEntries=allEntries.filter(e=>e.fixed_expense_id!==id);
+  await sb.from('fixed_expenses').delete().eq('id',id).eq('user_id',curUser.id);
+  allFixos=allFixos.filter(f=>f.id!==id);allEntries=allEntries.filter(e=>e.fixed_expense_id!==id);
   toast('Removido.');render();renderFixosPage();
 }
 
@@ -752,50 +609,42 @@ async function saveInvest(){
   const errEl=document.getElementById('mi-error');errEl.style.display='none';
   if(!desc||!val||!months||!start){errEl.textContent='Preencha todos os campos.';errEl.style.display='block';return;}
   const btn=document.getElementById('mi-save');btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';
-  const {data,error}=await sb.from('investments').insert([{
-    user_id:curUser.id,description:desc,goal,value_per_month:val,
-    months_total:months,months_done:done,start_month:start
-  }]).select();
-  btn.disabled=false;btn.textContent='Salvar investimento';
+  const {data,error}=await sb.from('investments').insert([{user_id:curUser.id,description:desc,goal,value_per_month:val,months_total:months,months_done:done,start_month:start}]).select();
+  btn.disabled=false;btn.textContent='Salvar';
   if(error){errEl.textContent=error.message;errEl.style.display='block';return;}
-  allInvests=[data[0],...allInvests];
-  closeModal('invest');toast('Investimento salvo!');render();renderInvestPage();
+  allInvests=[data[0],...allInvests];closeModal('invest');toast('Investimento salvo!');render();renderInvestPage();
 }
 
 async function deleteInvest(id){
-  const {error}=await sb.from('investments').delete().eq('id',id).eq('user_id',curUser.id);
-  if(error){toast('Erro.');return;}
+  await sb.from('investments').delete().eq('id',id).eq('user_id',curUser.id);
   allInvests=allInvests.filter(i=>i.id!==id);toast('Removido.');render();renderInvestPage();
 }
 
-// MAIN RENDER
 function render(){
   document.getElementById('monthLabel').textContent=MONTHS[curMonth]+' '+curYear;
   const arr=entriesFor(curYear,curMonth);
-  const manualEntries=arr.filter(e=>!e.auto);
-  const totalIn=manualEntries.filter(e=>e.type==='e').reduce((s,e)=>s+Number(e.value),0);
-  const totalManualOut=manualEntries.filter(e=>e.type==='g').reduce((s,e)=>s+Number(e.value),0);
-  const totalFixo=fixosTotalForMonth(curYear,curMonth);
-  const totalInvest=investTotalForMonth(curYear,curMonth);
-  const totalOut=totalManualOut+totalFixo+totalInvest;
-  const balance=totalIn-totalOut;
+  const manual=arr.filter(e=>!e.auto);
+  const tIn=manual.filter(e=>e.type==='e').reduce((s,e)=>s+Number(e.value),0);
+  const tLanc=manual.filter(e=>e.type==='g').reduce((s,e)=>s+Number(e.value),0);
+  const tFixo=fixosTotal(curYear,curMonth);
+  const tInvest=investTotal(curYear,curMonth);
+  const tOut=tLanc+tFixo+tInvest;
+  const bal=tIn-tOut;
 
-  document.getElementById('kpi-in').textContent=fmt(totalIn);
-  document.getElementById('kpi-in-n').textContent=manualEntries.filter(e=>e.type==='e').length+' lançamentos';
-  document.getElementById('kpi-out').textContent=fmt(totalOut);
-  document.getElementById('kpi-out-detail').textContent=`lançamentos ${fmt(totalManualOut)} + fixos ${fmt(totalFixo)} + invest. ${fmt(totalInvest)}`;
+  document.getElementById('kpi-in').textContent=fmt(tIn);
+  document.getElementById('kpi-in-n').textContent=manual.filter(e=>e.type==='e').length+' lançamentos';
+  document.getElementById('kpi-out').textContent=fmt(tOut);
+  document.getElementById('kpi-out-detail').textContent=`lanç. ${fmt(tLanc)} · fixos ${fmt(tFixo)} · invest. ${fmt(tInvest)}`;
   const balEl=document.getElementById('kpi-bal');
-  balEl.textContent=fmt(balance);balEl.className='kpi-value '+(balance>=0?'c-green':'c-red');
+  balEl.textContent=fmt(bal);balEl.className='kpi-value '+(bal>=0?'c-green':'c-red');
   const bf=document.getElementById('kpi-bar-fill');
-  bf.style.width=(totalIn>0?Math.max(0,Math.min(100,Math.round((balance/totalIn)*100))):0)+'%';
-  bf.style.background=balance>=0?'var(--green)':'var(--red)';
+  bf.style.width=(tIn>0?Math.max(0,Math.min(100,Math.round((bal/tIn)*100))):0)+'%';
+  bf.style.background=bal>=0?'var(--green)':'var(--red)';
 
-  // Table
   const tbody=document.getElementById('entry-body');
-  const displayEntries=manualEntries.slice(0,30);
-  tbody.innerHTML=displayEntries.length===0
+  tbody.innerHTML=manual.length===0
     ?'<tr><td colspan="6" class="empty-row">Nenhum lançamento neste mês</td></tr>'
-    :displayEntries.map(e=>`<tr>
+    :manual.slice(0,50).map(e=>`<tr>
       <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:11px">${e.entry_date}</td>
       <td>${e.description}</td>
       <td style="color:${CAT_COLORS[e.category]||'#7a7f9a'};font-size:11px">${e.category}</td>
@@ -804,245 +653,130 @@ function render(){
       <td><button class="del" onclick="deleteEntry(${JSON.stringify(e.id)})">×</button></td>
     </tr>`).join('');
 
-  // Cat bars
   const cats={};
-  manualEntries.filter(e=>e.type==='g').forEach(e=>{cats[e.category]=(cats[e.category]||0)+Number(e.value);});
-  if(totalFixo>0)cats['Fixos']=(cats['Fixos']||0)+totalFixo;
-  if(totalInvest>0)cats['Investimentos']=(cats['Investimentos']||0)+totalInvest;
+  manual.filter(e=>e.type==='g').forEach(e=>{cats[e.category]=(cats[e.category]||0)+Number(e.value);});
+  if(tFixo>0)cats['Fixos']=(cats['Fixos']||0)+tFixo;
+  if(tInvest>0)cats['Investimentos']=(cats['Investimentos']||0)+tInvest;
   const sorted=Object.entries(cats).sort((a,b)=>b[1]-a[1]).slice(0,7);
-  const maxCat=sorted[0]?sorted[0][1]:1;
+  const maxC=sorted[0]?sorted[0][1]:1;
   document.getElementById('cat-list').innerHTML=sorted.length===0
     ?'<div style="color:var(--muted);font-size:12px;text-align:center;padding:24px 0">Sem gastos no mês</div>'
-    :sorted.map(([name,val])=>`<div class="cat-item">
-      <div class="cat-name">${name}</div>
-      <div class="cat-track"><div class="cat-fill" style="width:${Math.round((val/maxCat)*100)}%;background:${CAT_COLORS[name]||'#7a7f9a'}"></div></div>
-      <div class="cat-amt">${fmt(val)}</div>
-    </div>`).join('');
+    :sorted.map(([n,v])=>`<div class="cat-item"><div class="cat-name">${n}</div><div class="cat-track"><div class="cat-fill" style="width:${Math.round((v/maxC)*100)}%;background:${CAT_COLORS[n]||'#7a7f9a'}"></div></div><div class="cat-amt">${fmt(v)}</div></div>`).join('');
 
-  renderDeficitChart();
+  renderDeficit();
 }
 
-function renderDeficitChart(){
-  const labels=[],dataIn=[],dataOut=[],dataFixo=[],dataInvest=[];
+function renderDeficit(){
+  const labels=[],dIn=[],dOut=[],dFix=[],dInv=[];
   for(let i=5;i>=0;i--){
-    let m=curMonth-i,y=curYear;
-    if(m<0){m+=12;y--;}
-    labels.push(MONTHS_SHORT[m]+'/'+String(y).slice(2));
+    let m=curMonth-i,y=curYear;if(m<0){m+=12;y--;}
+    labels.push(MS[m]+'/'+String(y).slice(2));
     const arr=entriesFor(y,m).filter(e=>!e.auto);
-    dataIn.push(arr.filter(e=>e.type==='e').reduce((s,e)=>s+Number(e.value),0));
-    dataOut.push(arr.filter(e=>e.type==='g').reduce((s,e)=>s+Number(e.value),0));
-    dataFixo.push(fixosTotalForMonth(y,m));
-    dataInvest.push(investTotalForMonth(y,m));
+    dIn.push(arr.filter(e=>e.type==='e').reduce((s,e)=>s+Number(e.value),0));
+    dOut.push(arr.filter(e=>e.type==='g').reduce((s,e)=>s+Number(e.value),0));
+    dFix.push(fixosTotal(y,m));dInv.push(investTotal(y,m));
   }
   if(deficitChart)deficitChart.destroy();
-  deficitChart=new Chart(document.getElementById('deficitChart'),{
-    type:'bar',
+  deficitChart=new Chart(document.getElementById('deficitChart'),{type:'bar',
     data:{labels,datasets:[
-      {label:'Entradas',data:dataIn,backgroundColor:'rgba(39,201,138,0.7)',borderRadius:4,borderSkipped:false},
-      {label:'Lançamentos',data:dataOut,backgroundColor:'rgba(224,92,92,0.7)',borderRadius:4,borderSkipped:false},
-      {label:'Gastos Fixos',data:dataFixo,backgroundColor:'rgba(245,166,35,0.7)',borderRadius:4,borderSkipped:false},
-      {label:'Investimentos',data:dataInvest,backgroundColor:'rgba(155,127,232,0.7)',borderRadius:4,borderSkipped:false}
+      {label:'Entradas',data:dIn,backgroundColor:'rgba(39,201,138,0.7)',borderRadius:4,borderSkipped:false},
+      {label:'Lançamentos',data:dOut,backgroundColor:'rgba(224,92,92,0.7)',borderRadius:4,borderSkipped:false},
+      {label:'Fixos',data:dFix,backgroundColor:'rgba(245,166,35,0.7)',borderRadius:4,borderSkipped:false},
+      {label:'Invest.',data:dInv,backgroundColor:'rgba(155,127,232,0.7)',borderRadius:4,borderSkipped:false}
     ]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{
-        x:{stacked:false,grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:11}}},
-        y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:11},callback:v=>fmtK(v)}}
-      }
-    }
-  });
+      scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:11}}},
+              y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:11},callback:v=>fmtK(v)}}}}});
 }
 
-// FIXOS PAGE
 function renderFixosPage(){
   const tbody=document.getElementById('fixos-body');
-  tbody.innerHTML=allFixos.length===0
-    ?'<tr><td colspan="6" class="empty-row">Nenhum gasto fixo cadastrado</td></tr>'
-    :allFixos.map(f=>{
-      const remaining=f.months_total-f.months_paid;
-      const pct=Math.round((f.months_paid/f.months_total)*100);
-      return`<tr>
-        <td>${f.description}</td>
-        <td style="color:${CAT_COLORS[f.category]||'#7a7f9a'};font-size:11px">${f.category}</td>
-        <td style="font-family:'DM Mono',monospace;color:var(--amber)">${fmt(f.value)}</td>
-        <td style="text-align:center">dia ${f.due_day}</td>
-        <td>
-          <div style="display:flex;align-items:center;gap:6px">
-            <div style="flex:1;height:4px;background:var(--bg);border-radius:2px;overflow:hidden;min-width:50px">
-              <div style="width:${pct}%;height:100%;background:var(--amber);border-radius:2px"></div>
-            </div>
-            <span style="font-size:10px;color:var(--muted);white-space:nowrap">${f.months_paid}/${f.months_total}</span>
-          </div>
-        </td>
-        <td><button class="del" onclick="deleteFixo(${f.id})">×</button></td>
-      </tr>`;
-    }).join('');
-
-  // Fixos chart — next 12 months total
+  tbody.innerHTML=allFixos.length===0?'<tr><td colspan="6" class="empty-row">Nenhum gasto fixo</td></tr>'
+    :allFixos.map(f=>{const pct=Math.round((f.months_paid/f.months_total)*100);return`<tr>
+      <td>${f.description}</td><td style="color:${CAT_COLORS[f.category]||'#7a7f9a'};font-size:11px">${f.category}</td>
+      <td style="font-family:'DM Mono',monospace;color:var(--amber)">${fmt(f.value)}</td>
+      <td style="text-align:center;font-size:11px">dia ${f.due_day}</td>
+      <td><div style="display:flex;align-items:center;gap:6px"><div style="flex:1;height:4px;background:var(--bg);border-radius:2px;overflow:hidden;min-width:50px"><div style="width:${pct}%;height:100%;background:var(--amber);border-radius:2px"></div></div><span style="font-size:10px;color:var(--muted)">${f.months_paid}/${f.months_total}</span></div></td>
+      <td><button class="del" onclick="deleteFixo(${f.id})">×</button></td></tr>`;}).join('');
   const labels=[],data=[];
-  for(let i=0;i<12;i++){
-    let m=curMonth+i,y=curYear;
-    if(m>11){m-=12;y++;}
-    labels.push(MONTHS_SHORT[m]+'/'+String(y).slice(2));
-    data.push(fixosTotalForMonth(y,m));
-  }
+  for(let i=0;i<12;i++){let m=curMonth+i,y=curYear;if(m>11){m-=12;y++;}labels.push(MS[m]+'/'+String(y).slice(2));data.push(fixosTotal(y,m));}
   if(fixosChart)fixosChart.destroy();
-  fixosChart=new Chart(document.getElementById('fixosChart'),{
-    type:'bar',
-    data:{labels,datasets:[{label:'Total fixos',data,backgroundColor:'rgba(245,166,35,0.65)',borderRadius:4,borderSkipped:false}]},
+  fixosChart=new Chart(document.getElementById('fixosChart'),{type:'bar',data:{labels,datasets:[{label:'Fixos',data,backgroundColor:'rgba(245,166,35,0.65)',borderRadius:4,borderSkipped:false}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{
-        x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:10},maxRotation:45}},
-        y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:11},callback:v=>fmtK(v)}}
-      }
-    }
-  });
-
+      scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:10},maxRotation:45}},
+              y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:11},callback:v=>fmtK(v)}}}}});
   renderTimeline('fixos');
 }
 
-// INVEST PAGE
 function renderInvestPage(){
   const tbody=document.getElementById('invest-body');
-  tbody.innerHTML=allInvests.length===0
-    ?'<tr><td colspan="6" class="empty-row">Nenhum investimento cadastrado</td></tr>'
-    :allInvests.map(inv=>{
-      const pct=Math.round((inv.months_done/inv.months_total)*100);
-      return`<tr>
-        <td>${inv.description}</td>
-        <td style="font-size:11px;color:var(--muted)">${inv.goal||'—'}</td>
-        <td style="font-family:'DM Mono',monospace;color:var(--purple)">${fmt(inv.value_per_month)}</td>
-        <td style="text-align:center">${inv.months_total}x</td>
-        <td>
-          <div style="display:flex;align-items:center;gap:6px">
-            <div style="flex:1;height:4px;background:var(--bg);border-radius:2px;overflow:hidden;min-width:50px">
-              <div style="width:${pct}%;height:100%;background:var(--purple);border-radius:2px"></div>
-            </div>
-            <span style="font-size:10px;color:var(--muted);white-space:nowrap">${inv.months_done}/${inv.months_total}</span>
-          </div>
-        </td>
-        <td><button class="del" onclick="deleteInvest(${inv.id})">×</button></td>
-      </tr>`;
-    }).join('');
-
+  tbody.innerHTML=allInvests.length===0?'<tr><td colspan="6" class="empty-row">Nenhum investimento</td></tr>'
+    :allInvests.map(inv=>{const pct=Math.round((inv.months_done/inv.months_total)*100);return`<tr>
+      <td>${inv.description}</td><td style="font-size:11px;color:var(--muted)">${inv.goal||'—'}</td>
+      <td style="font-family:'DM Mono',monospace;color:var(--purple)">${fmt(inv.value_per_month)}</td>
+      <td style="text-align:center">${inv.months_total}x</td>
+      <td><div style="display:flex;align-items:center;gap:6px"><div style="flex:1;height:4px;background:var(--bg);border-radius:2px;overflow:hidden;min-width:50px"><div style="width:${pct}%;height:100%;background:var(--purple);border-radius:2px"></div></div><span style="font-size:10px;color:var(--muted)">${inv.months_done}/${inv.months_total}</span></div></td>
+      <td><button class="del" onclick="deleteInvest(${inv.id})">×</button></td></tr>`;}).join('');
   const labels=[],data=[];
-  for(let i=0;i<12;i++){
-    let m=curMonth+i,y=curYear;
-    if(m>11){m-=12;y++;}
-    labels.push(MONTHS_SHORT[m]+'/'+String(y).slice(2));
-    data.push(investTotalForMonth(y,m));
-  }
+  for(let i=0;i<12;i++){let m=curMonth+i,y=curYear;if(m>11){m-=12;y++;}labels.push(MS[m]+'/'+String(y).slice(2));data.push(investTotal(y,m));}
   if(investChart)investChart.destroy();
-  investChart=new Chart(document.getElementById('investChart'),{
-    type:'bar',
-    data:{labels,datasets:[{label:'Total invest.',data,backgroundColor:'rgba(155,127,232,0.65)',borderRadius:4,borderSkipped:false}]},
+  investChart=new Chart(document.getElementById('investChart'),{type:'bar',data:{labels,datasets:[{label:'Invest.',data,backgroundColor:'rgba(155,127,232,0.65)',borderRadius:4,borderSkipped:false}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{
-        x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:10},maxRotation:45}},
-        y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:11},callback:v=>fmtK(v)}}
-      }
-    }
-  });
-
+      scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:10},maxRotation:45}},
+              y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:11},callback:v=>fmtK(v)}}}}});
   renderTimeline('invest');
 }
 
-// TIMELINE
 function renderTimeline(type){
   const months=parseInt(localStorage.getItem('ff_tl_months')||'18');
   const items=type==='fixos'?allFixos:allInvests;
-  const containerId=type+'-timeline';
-  const container=document.getElementById(containerId);
-
+  const container=document.getElementById(type+'-timeline');
   if(items.length===0){container.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:24px 0">Nenhum item cadastrado</div>';return;}
-
-  const monthLabels=[],monthKeys=[];
-  for(let i=0;i<months;i++){
-    let m=curMonth+i,y=curYear;
-    if(m>11){m-=12;y++;}
-    monthLabels.push(MONTHS_SHORT[m]+'/'+String(y).slice(2));
-    monthKeys.push({y,m});
-  }
-
-  const currentKey=mkKey(curYear,curMonth);
-  let html=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-    <span style="font-size:11px;color:var(--muted)">Meses à frente:</span>
+  const mKeys=[];
+  for(let i=0;i<months;i++){let m=curMonth+i,y=curYear;if(m>11){m-=12;y++;}mKeys.push({y,m,label:MS[m]+'/'+String(y).slice(2),key:mkKey(y,m)});}
+  const curKey=mkKey(curYear,curMonth);
+  let html=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="font-size:11px;color:var(--muted)">Meses à frente:</span>
     <select onchange="localStorage.setItem('ff_tl_months',this.value);renderTimeline('${type}')" style="background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:3px 8px;font-size:12px;outline:none;">
-      ${[6,12,18,24,36,48,60].map(n=>`<option value="${n}" ${n===months?'selected':''}>${n} meses</option>`).join('')}
-    </select>
-  </div>`;
-
-  html+='<div class="timeline-grid"><div class="tl-header"><div style="min-width:130px"></div>';
-  monthKeys.forEach(({y,m},i)=>{
-    const isCur=mkKey(y,m)===currentKey;
-    html+=`<div class="tl-month${isCur?' current':''}">${monthLabels[i]}</div>`;
-  });
-  html+='</div>';
-
+      ${[6,12,18,24,36,48,60].map(n=>`<option value="${n}"${n===months?' selected':''}>${n} meses</option>`).join('')}
+    </select></div>
+  <div style="display:inline-block;min-width:100%">
+  <div class="tl-header"><div style="min-width:130px"></div>${mKeys.map(({label,key})=>`<div class="tl-month${key===curKey?' current':''}">${label}</div>`).join('')}</div>`;
   items.forEach(item=>{
     html+=`<div class="tl-row"><div class="tl-label" title="${item.description}">${item.description}</div>`;
-    monthKeys.forEach(({y,m})=>{
-      const active=type==='fixos'?fixoActiveInMonth(item,y,m):investActiveInMonth(item,y,m);
-      const isCur=mkKey(y,m)===currentKey;
-      html+=`<div class="tl-cell${active?' active-'+(type==='fixos'?'expense':'invest'):''}${isCur?' current-month':''}"></div>`;
+    mKeys.forEach(({y,m,key})=>{
+      const active=type==='fixos'?fixoActive(item,y,m):investActive(item,y,m);
+      html+=`<div class="tl-cell${active?' active-'+(type==='fixos'?'expense':'invest'):''}${key===curKey?' current-month':''}"></div>`;
     });
     html+='</div>';
   });
-
-  // Totals row
   html+='<div class="tl-total-row"><div style="min-width:130px;font-size:11px;font-weight:600;color:var(--muted)">Total/mês</div>';
-  monthKeys.forEach(({y,m})=>{
-    const total=type==='fixos'?fixosTotalForMonth(y,m):investTotalForMonth(y,m);
+  mKeys.forEach(({y,m})=>{
+    const total=type==='fixos'?fixosTotal(y,m):investTotal(y,m);
     const color=type==='fixos'?'var(--amber)':'var(--purple)';
     const bg=type==='fixos'?'rgba(245,166,35,0.1)':'rgba(155,127,232,0.1)';
     html+=`<div class="tl-total-cell" style="color:${color};background:${bg}">${total>0?fmtK(total):''}</div>`;
   });
   html+='</div></div>';
-
   container.innerHTML=html;
 }
 
-// RESUMO GERENCIAL
 function renderResumo(){
-  const NUM_MONTHS=12;
-  const months=[];
-  for(let i=NUM_MONTHS-1;i>=0;i--){
-    let m=curMonth-i,y=curYear;
-    if(m<0){m+=12;y--;}
-    months.push({y,m,label:MONTHS_SHORT[m]+'/'+String(y).slice(2),key:mkKey(y,m)});
-  }
+  const N=12,months=[];
+  for(let i=N-1;i>=0;i--){let m=curMonth-i,y=curYear;if(m<0){m+=12;y--;}months.push({y,m,label:MS[m]+'/'+String(y).slice(2),key:mkKey(y,m)});}
 
   if(curReport==='mensal'){
-    let html=`<thead><tr><th>Mês</th><th>Entradas</th><th>Lançamentos</th><th>Gastos Fixos</th><th>Investimentos</th><th>Total Saídas</th><th>Saldo</th></tr></thead><tbody>`;
-    let totIn=0,totLanc=0,totFixo=0,totInvest=0;
+    let html='<thead><tr><th>Mês</th><th>Entradas</th><th>Lançamentos</th><th>Gastos Fixos</th><th>Investimentos</th><th>Total Saídas</th><th>Saldo</th></tr></thead><tbody>';
+    let ti=0,tl=0,tf=0,tv=0;
     months.forEach(({y,m,label})=>{
       const arr=entriesFor(y,m).filter(e=>!e.auto);
-      const tIn=arr.filter(e=>e.type==='e').reduce((s,e)=>s+Number(e.value),0);
-      const tLanc=arr.filter(e=>e.type==='g').reduce((s,e)=>s+Number(e.value),0);
-      const tFixo=fixosTotalForMonth(y,m);
-      const tInvest=investTotalForMonth(y,m);
-      const tOut=tLanc+tFixo+tInvest;
-      const bal=tIn-tOut;
-      totIn+=tIn;totLanc+=tLanc;totFixo+=tFixo;totInvest+=tInvest;
-      html+=`<tr>
-        <td style="font-weight:500">${label}</td>
-        <td class="positive">${tIn>0?fmt(tIn):'—'}</td>
-        <td class="${tLanc>0?'negative':'neutral'}">${tLanc>0?fmt(tLanc):'—'}</td>
-        <td class="${tFixo>0?'negative':'neutral'}">${tFixo>0?fmt(tFixo):'—'}</td>
-        <td class="${tInvest>0?'negative':'neutral'}">${tInvest>0?fmt(tInvest):'—'}</td>
-        <td class="${tOut>0?'negative':'neutral'}">${tOut>0?fmt(tOut):'—'}</td>
-        <td class="${bal>=0?'positive':'negative'}" style="font-weight:500">${fmt(bal)}</td>
-      </tr>`;
+      const i=arr.filter(e=>e.type==='e').reduce((s,e)=>s+Number(e.value),0);
+      const l=arr.filter(e=>e.type==='g').reduce((s,e)=>s+Number(e.value),0);
+      const f=fixosTotal(y,m),v=investTotal(y,m),o=l+f+v,b=i-o;
+      ti+=i;tl+=l;tf+=f;tv+=v;
+      html+=`<tr><td style="font-weight:500">${label}</td><td class="positive">${i>0?fmt(i):'—'}</td><td class="${l>0?'negative':'neutral'}">${l>0?fmt(l):'—'}</td><td class="${f>0?'negative':'neutral'}">${f>0?fmt(f):'—'}</td><td class="${v>0?'negative':'neutral'}">${v>0?fmt(v):'—'}</td><td class="${o>0?'negative':'neutral'}">${o>0?fmt(o):'—'}</td><td class="${b>=0?'positive':'negative'}" style="font-weight:500">${fmt(b)}</td></tr>`;
     });
-    const totOut=totLanc+totFixo+totInvest,totBal=totIn-totOut;
-    html+=`</tbody><tfoot><tr class="total-row">
-      <td>Total</td>
-      <td class="positive">${fmt(totIn)}</td>
-      <td class="negative">${fmt(totLanc)}</td>
-      <td class="negative">${fmt(totFixo)}</td>
-      <td class="negative">${fmt(totInvest)}</td>
-      <td class="negative">${fmt(totOut)}</td>
-      <td class="${totBal>=0?'positive':'negative'}">${fmt(totBal)}</td>
-    </tr></tfoot>`;
+    const to=tl+tf+tv,tb=ti-to;
+    html+=`</tbody><tfoot><tr class="total-row"><td>Total</td><td class="positive">${fmt(ti)}</td><td class="negative">${fmt(tl)}</td><td class="negative">${fmt(tf)}</td><td class="negative">${fmt(tv)}</td><td class="negative">${fmt(to)}</td><td class="${tb>=0?'positive':'negative'}">${fmt(tb)}</td></tr></tfoot>`;
     document.getElementById('monthly-matrix').innerHTML=html;
   }
 
@@ -1050,72 +784,51 @@ function renderResumo(){
     const allCats=[...new Set(allEntries.filter(e=>e.type==='g'&&!e.auto).map(e=>e.category))].sort();
     let html=`<thead><tr><th>Categoria</th>${months.map(({label})=>`<th>${label}</th>`).join('')}<th>Total</th></tr></thead><tbody>`;
     allCats.forEach(cat=>{
-      let rowTotal=0;
-      const cells=months.map(({y,m})=>{
-        const v=entriesFor(y,m).filter(e=>e.type==='g'&&!e.auto&&e.category===cat).reduce((s,e)=>s+Number(e.value),0);
-        rowTotal+=v;
-        return`<td class="${v>0?'negative':'neutral'}">${v>0?fmt(v):'—'}</td>`;
-      });
-      html+=`<tr><td style="color:${CAT_COLORS[cat]||'#7a7f9a'}">${cat}</td>${cells.join('')}<td class="negative" style="font-weight:500">${rowTotal>0?fmt(rowTotal):'—'}</td></tr>`;
+      let rt=0;
+      const cells=months.map(({y,m})=>{const v=entriesFor(y,m).filter(e=>e.type==='g'&&!e.auto&&e.category===cat).reduce((s,e)=>s+Number(e.value),0);rt+=v;return`<td class="${v>0?'negative':'neutral'}">${v>0?fmt(v):'—'}</td>`;});
+      html+=`<tr><td style="color:${CAT_COLORS[cat]||'#7a7f9a'}">${cat}</td>${cells.join('')}<td class="negative" style="font-weight:500">${rt>0?fmt(rt):'—'}</td></tr>`;
     });
-    html+='</tbody>';
-    document.getElementById('cat-matrix').innerHTML=html||'<tbody><tr><td colspan="14" class="empty-row">Sem dados</td></tr></tbody>';
+    document.getElementById('cat-matrix').innerHTML=html+'</tbody>';
   }
 
   if(curReport==='evolucao'){
     const labels=months.map(({label})=>label);
-    const dataIn=months.map(({y,m})=>entriesFor(y,m).filter(e=>e.type==='e'&&!e.auto).reduce((s,e)=>s+Number(e.value),0));
-    const dataOut=months.map(({y,m})=>{
-      const arr=entriesFor(y,m).filter(e=>!e.auto);
-      return arr.filter(e=>e.type==='g').reduce((s,e)=>s+Number(e.value),0)+fixosTotalForMonth(y,m)+investTotalForMonth(y,m);
-    });
-    const dataBal=months.map((_,i)=>dataIn[i]-dataOut[i]);
+    const dIn=months.map(({y,m})=>entriesFor(y,m).filter(e=>e.type==='e'&&!e.auto).reduce((s,e)=>s+Number(e.value),0));
+    const dOut=months.map(({y,m})=>{const a=entriesFor(y,m).filter(e=>!e.auto);return a.filter(e=>e.type==='g').reduce((s,e)=>s+Number(e.value),0)+fixosTotal(y,m)+investTotal(y,m);});
+    const dBal=months.map((_,i)=>dIn[i]-dOut[i]);
     if(evolucaoChart)evolucaoChart.destroy();
-    evolucaoChart=new Chart(document.getElementById('evolucaoChart'),{
-      type:'bar',
+    evolucaoChart=new Chart(document.getElementById('evolucaoChart'),{type:'bar',
       data:{labels,datasets:[
-        {label:'Entradas',data:dataIn,backgroundColor:'rgba(39,201,138,0.65)',borderRadius:4,borderSkipped:false,order:2},
-        {label:'Saídas',data:dataOut,backgroundColor:'rgba(224,92,92,0.65)',borderRadius:4,borderSkipped:false,order:2},
-        {label:'Saldo',data:dataBal,type:'line',borderColor:'#5b8dee',backgroundColor:'rgba(91,141,238,0.1)',borderWidth:2,pointRadius:3,fill:true,order:1}
+        {label:'Entradas',data:dIn,backgroundColor:'rgba(39,201,138,0.65)',borderRadius:4,borderSkipped:false,order:2},
+        {label:'Saídas',data:dOut,backgroundColor:'rgba(224,92,92,0.65)',borderRadius:4,borderSkipped:false,order:2},
+        {label:'Saldo',data:dBal,type:'line',borderColor:'#5b8dee',backgroundColor:'rgba(91,141,238,0.1)',borderWidth:2,pointRadius:3,fill:true,order:1}
       ]},
       options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-        scales:{
-          x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:11},maxRotation:45}},
-          y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:11},callback:v=>fmtK(v)}}
-        }
-      }
-    });
+        scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:11},maxRotation:45}},
+                y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:11},callback:v=>fmtK(v)}}}}});
   }
 }
 
-// ADMIN
 function goAdmin(){
   if(!isAdmin()){toast('Acesso negado.');return;}
   const saved=localStorage.getItem('ff_service_key');
-  if(saved){initAdminClient(saved);}
+  if(saved){initAdminClient(saved);showScreen('main-app');}
   else{showScreen('service-key-screen');}
 }
 function saveServiceKey(){
   const key=document.getElementById('service-key-input').value.trim();
   if(!key){alert('Cole a service_role key.');return;}
   localStorage.setItem('ff_service_key',key);
-  initAdminClient(key);
-  showScreen('main-app');
+  initAdminClient(key);showScreen('main-app');
 }
-function initAdminClient(k){
-  const url=localStorage.getItem('ff_url');
-  sbAdmin=window.supabase.createClient(url,k,{auth:{autoRefreshToken:false,persistSession:false}});
-}
+function initAdminClient(k){sbAdmin=window.supabase.createClient(SB_URL,k,{auth:{autoRefreshToken:false,persistSession:false}});}
 
-function confirmModalAction(){}
-function closeModal(t){document.getElementById('modal-'+t).classList.remove('open');}
-
-// BOOT
-const savedUrl=localStorage.getItem('ff_url'),savedKey=localStorage.getItem('ff_key');
-if(savedUrl&&savedKey){
-  try{sb=window.supabase.createClient(savedUrl,savedKey);checkSession();}
-  catch(e){showScreen('setup-screen');}
-}else{showScreen('setup-screen');}
+// BOOT — verifica sessão existente
+(async()=>{
+  const {data:{session}}=await sb.auth.getSession();
+  if(session){curUser=session.user;enterApp();}
+  else{showScreen('auth-screen');}
+})();
 </script>
 </body>
 </html>
