@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>FinanceFlow</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -759,8 +757,11 @@ input:checked+.slider:before{transform:translateX(16px);background:#fff;}
 
 <div id="toast"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script>
-const SB_URL='https://mnhdqdiyybuxjwzdxhha.supabase.co';
+// garante que as libs externas carregaram antes de executar
+window.addEventListener('DOMContentLoaded', function() {'https://mnhdqdiyybuxjwzdxhha.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1uaGRxZGl5eWJ1eGp3emR4aGhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzNTc1ODIsImV4cCI6MjA4OTkzMzU4Mn0._YmX_NxhqRF8fJwDuhx8V_JTz02DWed8AsKobKUjsfs';
 const ADMIN_EMAIL='j.alex.junior@hotmail.com';
 const MONTHS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
@@ -1931,6 +1932,7 @@ async function fetchRates(){
   const {data:{session}}=await sb.auth.getSession();
   if(session){curUser=session.user;enterApp();}else{showScreen('auth-screen');}
 })();
+}); // end DOMContentLoaded
 </script>
 </body>
 </html>
