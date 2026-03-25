@@ -198,7 +198,7 @@ input:checked+.slider:before{transform:translateX(16px);background:#fff;}
 @keyframes spin{to{transform:rotate(360deg);}}
 #toast{position:fixed;bottom:24px;right:24px;background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:10px 16px;border-radius:8px;font-size:13px;opacity:0;transition:opacity 0.2s;z-index:999;pointer-events:none;}
 #toast.show{opacity:1;}
-@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr);}.grid-2{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr 1fr;}.modal-grid{grid-template-columns:1fr;}}
+@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr);}.grid-2{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr 1fr;}.modal-grid{grid-template-columns:1fr;}#page-projetos .wrap>div:first-child{grid-template-columns:1fr!important;}}
 @media(max-width:500px){.kpi-grid{grid-template-columns:repeat(2,1fr);}.form-row{grid-template-columns:1fr;}.form-row2{grid-template-columns:1fr;}.topbar{padding:0 12px;}.wrap{padding:12px;}.user-badge{display:none;}.month-label{min-width:90px;font-size:12px;}}
 </style>
 </head>
@@ -314,6 +314,7 @@ input:checked+.slider:before{transform:translateX(16px);background:#fff;}
     <div class="page-tab" onclick="switchPage('investimentos')">Investimentos</div>
     <div class="page-tab" onclick="switchPage('receber')">Contas a Receber</div>
     <div class="page-tab" onclick="switchPage('resumo')">Resumo Gerencial</div>
+    <div class="page-tab" onclick="switchPage('projetos')">Projetos Financeiros</div>
   </div>
 
   <!-- DASHBOARD -->
@@ -392,6 +393,15 @@ input:checked+.slider:before{transform:translateX(16px);background:#fff;}
         <div class="card"><div class="card-title">Comprometimento — 12 meses</div><div style="position:relative;width:100%;height:220px;"><canvas id="fixosChart"></canvas></div></div>
       </div>
       <div class="card"><div class="card-title">Linha do tempo — gastos fixos</div><div class="timeline-wrap"><div id="fixos-timeline"></div></div></div>
+      <!-- KPI COMPROMETIMENTO VS ENTRADAS -->
+      <div class="card" style="margin-top:14px">
+        <div class="card-title">Comprometimento vs Entradas Fixas — próximos 12 meses</div>
+        <div style="position:relative;width:100%;height:320px;"><canvas id="commitChart"></canvas></div>
+        <div style="display:flex;gap:16px;margin-top:10px;font-size:11px;color:var(--muted);flex-wrap:wrap;">
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#27c98a;display:inline-block"></span>Entradas fixas projetadas</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#e05c5c;display:inline-block"></span>Gastos fixos comprometidos</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -438,6 +448,161 @@ input:checked+.slider:before{transform:translateX(16px);background:#fff;}
           <div id="recv-list"><div style="color:var(--muted);font-size:12px;text-align:center;padding:28px 0">Nenhuma conta</div></div>
         </div>
         <div class="card"><div class="card-title">Resumo</div><div id="recv-summary"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJETOS FINANCEIROS -->
+  <div class="page" id="page-projetos">
+    <div class="wrap">
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:14px;align-items:start;">
+        <div>
+          <!-- CALCULADORAS -->
+          <div class="card" style="margin-bottom:14px">
+            <div class="card-title">
+              <span id="proj-mode-title">Calculadora de Projetos</span>
+              <div style="display:flex;gap:6px;">
+                <button class="card-title-btn btn-blue" id="mode-btn-1" onclick="setProjMode(1)">🎯 Meta</button>
+                <button class="card-title-btn" id="mode-btn-2" onclick="setProjMode(2)" style="background:var(--surface2);color:var(--muted);border:1px solid var(--border)">📈 Projeção</button>
+                <button class="card-title-btn" id="mode-btn-3" onclick="setProjMode(3)" style="background:var(--surface2);color:var(--muted);border:1px solid var(--border)">💰 Rendimento</button>
+              </div>
+            </div>
+
+            <!-- INPUTS COMUNS -->
+            <div class="modal-grid" style="margin-bottom:12px;">
+              <div class="fg"><label>Nome do projeto</label><input type="text" id="pj-name" placeholder="Ex: Compra do carro"/></div>
+              <div class="fg"><label>Categoria</label>
+                <select id="pj-cat" onchange="toggleCustomCat('pj')">
+                  <option>Veículo</option><option>Imóvel</option><option>Viagem</option>
+                  <option>Educação</option><option>Reserva</option><option>Aposentadoria</option>
+                  <option>Negócio</option><option>Outros</option>
+                  <option value="custom">+ Nova categoria</option>
+                </select>
+                <div class="cat-custom-wrap" id="pj-custom-wrap"><input type="text" id="pj-custom-cat" placeholder="Digite a categoria..."/></div>
+              </div>
+              <div class="fg"><label>Taxa de rentabilidade (% ao ano)</label><input type="number" id="pj-rate" placeholder="Ex: 12.5" step="0.1" min="0"/></div>
+              <div class="fg"><label>Tipo de indexador</label>
+                <select id="pj-rate-type">
+                  <option value="prefixado">Prefixado</option>
+                  <option value="cdi">% do CDI</option>
+                  <option value="selic">% da Selic</option>
+                  <option value="ipca">IPCA +</option>
+                </select>
+              </div>
+              <div class="fg"><label>Regime de IR</label>
+                <select id="pj-ir">
+                  <option value="regressivo">Regressivo (tabela)</option>
+                  <option value="fixo15">Fixo 15%</option>
+                  <option value="isento">Isento (LCI/LCA/Poupança)</option>
+                </select>
+              </div>
+              <div class="fg"><label>Prazo (meses)</label><input type="number" id="pj-months" placeholder="Ex: 24" min="1"/></div>
+            </div>
+
+            <!-- MODE 1: META -->
+            <div id="proj-mode-1">
+              <div class="modal-grid" style="margin-bottom:12px;">
+                <div class="fg"><label>Valor alvo (R$)</label><input type="number" id="pj-target" placeholder="Ex: 80000" min="0" step="100"/></div>
+                <div class="fg"><label>Aporte inicial (R$)</label><input type="number" id="pj-initial" placeholder="Ex: 5000" min="0" step="100" value="0"/></div>
+              </div>
+              <div style="background:var(--green-dim);border:1px solid rgba(39,201,138,0.2);border-radius:8px;padding:12px 16px;margin-bottom:12px;display:none" id="result-1">
+                <div style="font-size:11px;color:var(--green);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Resultado</div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+                  <div><div style="font-size:11px;color:var(--muted)">Aporte mensal</div><div style="font-size:18px;font-weight:600;color:var(--green)" id="r1-monthly">—</div></div>
+                  <div><div style="font-size:11px;color:var(--muted)">Total investido</div><div style="font-size:18px;font-weight:600" id="r1-invested">—</div></div>
+                  <div><div style="font-size:11px;color:var(--muted)">Rendimento líq. IR</div><div style="font-size:18px;font-weight:600;color:var(--amber)" id="r1-yield">—</div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MODE 2: PROJEÇÃO -->
+            <div id="proj-mode-2" style="display:none">
+              <div class="modal-grid" style="margin-bottom:12px;">
+                <div class="fg"><label>Aporte mensal disponível (R$)</label><input type="number" id="pj-monthly" placeholder="Ex: 500" min="0" step="50"/></div>
+                <div class="fg"><label>Aporte inicial (R$)</label><input type="number" id="pj-initial2" placeholder="Ex: 1000" min="0" step="100" value="0"/></div>
+              </div>
+              <div style="background:var(--blue-dim);border:1px solid rgba(91,141,238,0.2);border-radius:8px;padding:12px 16px;margin-bottom:12px;display:none" id="result-2">
+                <div style="font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Resultado</div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+                  <div><div style="font-size:11px;color:var(--muted)">Valor final</div><div style="font-size:18px;font-weight:600;color:var(--blue)" id="r2-final">—</div></div>
+                  <div><div style="font-size:11px;color:var(--muted)">Total investido</div><div style="font-size:18px;font-weight:600" id="r2-invested">—</div></div>
+                  <div><div style="font-size:11px;color:var(--muted)">Rendimento líq. IR</div><div style="font-size:18px;font-weight:600;color:var(--amber)" id="r2-yield">—</div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MODE 3: RENDIMENTO -->
+            <div id="proj-mode-3" style="display:none">
+              <div class="modal-grid" style="margin-bottom:12px;">
+                <div class="fg"><label>Aporte único (R$)</label><input type="number" id="pj-lump" placeholder="Ex: 10000" min="0" step="500"/></div>
+                <div class="fg" style="display:flex;align-items:flex-end"><label>&nbsp;</label><div style="font-size:11px;color:var(--muted);padding-bottom:10px">Prazo e taxa definidos acima</div></div>
+              </div>
+              <div style="background:var(--purple-dim);border:1px solid rgba(155,127,232,0.2);border-radius:8px;padding:12px 16px;margin-bottom:12px;display:none" id="result-3">
+                <div style="font-size:11px;color:var(--purple);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Resultado</div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+                  <div><div style="font-size:11px;color:var(--muted)">Valor final</div><div style="font-size:18px;font-weight:600;color:var(--purple)" id="r3-final">—</div></div>
+                  <div><div style="font-size:11px;color:var(--muted)">Rendimento bruto</div><div style="font-size:18px;font-weight:600" id="r3-gross">—</div></div>
+                  <div><div style="font-size:11px;color:var(--muted)">Líquido (IR+IOF)</div><div style="font-size:18px;font-weight:600;color:var(--green)" id="r3-net">—</div></div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:8px;">
+              <button class="btn-submit" onclick="calcProject()" style="flex:2">Calcular</button>
+              <button class="btn-submit" id="save-proj-btn" onclick="saveProject()" style="flex:1;background:var(--green);display:none">💾 Salvar projeto</button>
+            </div>
+            <div class="msg-box msg-error" id="pj-error" style="margin-top:10px;margin-bottom:0"></div>
+          </div>
+
+          <!-- GRÁFICO EVOLUÇÃO -->
+          <div class="card" style="margin-bottom:14px;display:none" id="proj-chart-card">
+            <div class="card-title">Evolução do patrimônio ao longo do prazo</div>
+            <div style="position:relative;width:100%;height:240px;"><canvas id="projEvolutionChart"></canvas></div>
+          </div>
+
+          <!-- PROJETOS SALVOS -->
+          <div class="card">
+            <div class="card-title"><span>Projetos salvos</span><span id="proj-count" style="color:var(--muted);font-size:11px;font-weight:400"></span></div>
+            <div id="proj-list"><div style="color:var(--muted);font-size:12px;text-align:center;padding:28px 0">Nenhum projeto salvo</div></div>
+          </div>
+        </div>
+
+        <!-- SIDEBAR TAXAS -->
+        <div>
+          <div class="card" style="position:sticky;top:70px;">
+            <div class="card-title">
+              <span>Taxas do mercado</span>
+              <button class="card-title-btn btn-blue" onclick="fetchRates()" id="refresh-rates-btn">↺ Atualizar</button>
+            </div>
+            <div id="rates-loading" style="color:var(--muted);font-size:12px;text-align:center;padding:16px 0">
+              <span class="spinner" style="border-top-color:var(--blue)"></span>
+            </div>
+            <div id="rates-content" style="display:none">
+              <div style="margin-bottom:12px;">
+                <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Indicadores (% a.a.)</div>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--surface2);border-radius:8px;">
+                    <span style="font-size:12px;font-weight:500">Selic</span>
+                    <span style="font-size:14px;font-weight:600;color:var(--blue)" id="rate-selic">—</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--surface2);border-radius:8px;">
+                    <span style="font-size:12px;font-weight:500">CDI</span>
+                    <span style="font-size:14px;font-weight:600;color:var(--green)" id="rate-cdi">—</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--surface2);border-radius:8px;">
+                    <span style="font-size:12px;font-weight:500">IPCA (12m)</span>
+                    <span style="font-size:14px;font-weight:600;color:var(--amber)" id="rate-ipca">—</span>
+                  </div>
+                </div>
+              </div>
+              <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Sugestões de baixo risco</div>
+              <div id="investment-tips" style="display:flex;flex-direction:column;gap:8px;"></div>
+              <div style="font-size:10px;color:var(--muted2);margin-top:12px;line-height:1.5">
+                ⚠️ Dados via API do Banco Central. Rentabilidades são estimativas — consulte seu banco/corretora.
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -604,8 +769,8 @@ const CAT_COLORS={'Alimentação':'#5b8dee','Transporte':'#f5a623','Moradia':'#9
 
 const sb=window.supabase.createClient(SB_URL,SB_KEY);
 let sbAdmin=null,curUser=null,curType='g';
-let allEntries=[],allFixos=[],allInvests=[],allIncomes=[],allRecv=[];
-let deficitChart=null,fixosChart=null,investChart=null,incomesChart=null,evolucaoChart=null;
+let allEntries=[],allFixos=[],allInvests=[],allIncomes=[],allRecv=[],allProjects=[];
+let deficitChart=null,fixosChart=null,investChart=null,incomesChart=null,evolucaoChart=null,commitChart=null,projEvolutionChart=null;
 let now=new Date(),curMonth=now.getMonth(),curYear=now.getFullYear();
 let authMode='login',curReport='mensal';
 // edit state
@@ -626,7 +791,7 @@ function showScreen(id){
   });
 }
 
-const PAGES=['dashboard','fixos','entradas','investimentos','receber','resumo'];
+const PAGES=['dashboard','fixos','entradas','investimentos','receber','resumo','projetos'];
 function switchPage(p){
   document.querySelectorAll('.page-tab').forEach((t,i)=>{t.className='page-tab'+(PAGES[i]===p?' active':'');});
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
@@ -636,6 +801,7 @@ function switchPage(p){
   if(p==='entradas')renderIncomesPage();
   if(p==='investimentos')renderInvestPage();
   if(p==='receber')renderRecvPage();
+  if(p==='projetos'){fetchRates();renderProjList();}
 }
 
 function switchReport(r){
@@ -698,14 +864,15 @@ function enterApp(){
 
 async function loadAll(){
   const uid=curUser.id;
-  const [r1,r2,r3,r4,r5]=await Promise.all([
+  const [r1,r2,r3,r4,r5,r6]=await Promise.all([
     sb.from('entries').select('*').eq('user_id',uid).order('created_at',{ascending:false}),
     sb.from('fixed_expenses').select('*').eq('user_id',uid).order('created_at',{ascending:false}),
     sb.from('investments').select('*').eq('user_id',uid).order('created_at',{ascending:false}),
     sb.from('fixed_incomes').select('*').eq('user_id',uid).order('created_at',{ascending:false}),
-    sb.from('receivables').select('*').eq('user_id',uid).order('created_at',{ascending:false})
+    sb.from('receivables').select('*').eq('user_id',uid).order('created_at',{ascending:false}),
+    sb.from('financial_projects').select('*').eq('user_id',uid).order('created_at',{ascending:false})
   ]);
-  allEntries=r1.data||[];allFixos=r2.data||[];allInvests=r3.data||[];allIncomes=r4.data||[];allRecv=r5.data||[];
+  allEntries=r1.data||[];allFixos=r2.data||[];allInvests=r3.data||[];allIncomes=r4.data||[];allRecv=r5.data||[];allProjects=r6.data||[];
   autoInjectFixos();render();
 }
 
@@ -1144,6 +1311,7 @@ function renderFixosPage(){
   fixosChart=new Chart(document.getElementById('fixosChart'),{type:'bar',data:{labels,datasets:[{label:'Fixos',data,backgroundColor:'rgba(245,166,35,0.65)',borderRadius:4,borderSkipped:false}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:10},maxRotation:45}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:11},callback:v=>fmtK(v)}}}}});
   renderTimeline('fixos');
+  renderCommitChart();
 }
 
 function renderIncomesPage(){
@@ -1395,6 +1563,367 @@ async function confirmDeleteUser(){
   btn.disabled=false;btn.textContent='Deletar permanentemente';
   if(error){toast('Erro: '+error.message);return;}
   toast('Usuário deletado.');closeModal('del-user');loadAdminData();
+}
+
+// ── COMMITMENT CHART ──
+function renderCommitChart(){
+  const labels=[],dataIncome=[],dataExpense=[],pctLabels=[];
+  for(let i=0;i<12;i++){
+    let m=curMonth+i,y=curYear;if(m>11){m-=12;y++;}
+    labels.push(MS[m]+'/'+String(y).slice(2));
+    const inc=incomesTotal(y,m)||0;
+    const exp=fixosTotal(y,m)||0;
+    dataIncome.push(inc);
+    dataExpense.push(exp);
+    const pct=inc>0?Math.round((exp/inc)*100):0;
+    pctLabels.push(pct+'%');
+  }
+  if(commitChart)commitChart.destroy();
+  commitChart=new Chart(document.getElementById('commitChart'),{
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'Entradas fixas',data:dataIncome,backgroundColor:'rgba(39,201,138,0.65)',borderRadius:4,borderSkipped:false},
+      {label:'Gastos fixos',data:dataExpense,backgroundColor:'rgba(224,92,92,0.65)',borderRadius:4,borderSkipped:false}
+    ]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: R$ ${ctx.raw.toLocaleString('pt-BR',{minimumFractionDigits:2})}`}},
+        afterDraw:{
+          id:'pctLabels',
+          afterDatasetsDraw(chart){
+            const ctx2=chart.ctx;
+            chart.data.datasets[0].data.forEach((_,i)=>{
+              const incVal=chart.data.datasets[0].data[i]||0;
+              const expVal=chart.data.datasets[1].data[i]||0;
+              const pct=incVal>0?Math.round((expVal/incVal)*100):0;
+              const meta=chart.getDatasetMeta(0);
+              if(meta.data[i]){
+                const x=meta.data[i].x;
+                const top=Math.min(chart.getDatasetMeta(0).data[i].y,chart.getDatasetMeta(1).data[i]?.y||999)-8;
+                ctx2.fillStyle=pct>80?'#e05c5c':pct>50?'#f5a623':'#27c98a';
+                ctx2.font='bold 11px DM Sans,sans-serif';
+                ctx2.textAlign='center';
+                ctx2.fillText(pct+'%',x,top);
+              }
+            });
+          }
+        }
+      },
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:10},maxRotation:45}},
+        y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:11},callback:v=>fmtK(v)}}
+      }
+    },
+    plugins:[{
+      id:'pctLabels',
+      afterDatasetsDraw(chart){
+        const ctx2=chart.ctx;
+        chart.data.datasets[0].data.forEach((_,i)=>{
+          const incVal=chart.data.datasets[0].data[i]||0;
+          const expVal=(chart.data.datasets[1]&&chart.data.datasets[1].data[i])||0;
+          const pct=incVal>0?Math.round((expVal/incVal)*100):0;
+          const meta0=chart.getDatasetMeta(0);
+          const meta1=chart.getDatasetMeta(1);
+          if(meta0.data[i]&&meta1.data[i]){
+            const x=meta0.data[i].x;
+            const y0=meta0.data[i].y;
+            const y1=meta1.data[i].y;
+            const topY=Math.min(y0,y1)-10;
+            ctx2.save();
+            ctx2.fillStyle=pct>80?'#e05c5c':pct>50?'#f5a623':'#27c98a';
+            ctx2.font='bold 11px DM Sans,sans-serif';
+            ctx2.textAlign='center';
+            ctx2.fillText(pct+'%',x,topY);
+            ctx2.restore();
+          }
+        });
+      }
+    }]
+  });
+}
+
+// ── PROJETOS FINANCEIROS ──
+let curProjMode=1,projEvolutionChart=null,lastCalcResult=null;
+
+function setProjMode(m){
+  curProjMode=m;
+  [1,2,3].forEach(i=>{
+    document.getElementById('proj-mode-'+i).style.display=i===m?'block':'none';
+    const btn=document.getElementById('mode-btn-'+i);
+    if(i===m){btn.className='card-title-btn btn-blue';}
+    else{btn.className='card-title-btn';btn.style.background='var(--surface2)';btn.style.color='var(--muted)';btn.style.border='1px solid var(--border)';}
+  });
+  const titles={1:'🎯 Calculadora de Meta',2:'📈 Calculadora de Projeção',3:'💰 Calculadora de Rendimento'};
+  document.getElementById('proj-mode-title').textContent=titles[m];
+  [1,2,3].forEach(i=>document.getElementById('result-'+i).style.display='none');
+  document.getElementById('proj-chart-card').style.display='none';
+  document.getElementById('save-proj-btn').style.display='none';
+  lastCalcResult=null;
+}
+
+function getIRRate(months,regime){
+  if(regime==='isento')return 0;
+  if(regime==='fixo15')return 0.15;
+  // tabela regressiva
+  if(months<=6)return 0.225;
+  if(months<=12)return 0.20;
+  if(months<=24)return 0.175;
+  return 0.15;
+}
+
+function getIOF(days){
+  const iofTable=[0,0.96,0.93,0.90,0.86,0.83,0.80,0.76,0.73,0.70,0.66,0.63,0.60,0.56,0.53,0.50,0.46,0.43,0.40,0.36,0.33,0.30,0.26,0.23,0.20,0.16,0.13,0.10,0.06,0.03,0];
+  if(days>=30)return 0;
+  return iofTable[Math.min(days,30)]/100;
+}
+
+function calcFV(principal,monthlyRate,n){
+  // Future value of lump sum
+  return principal*Math.pow(1+monthlyRate,n);
+}
+function calcFVAnnuity(pmt,monthlyRate,n){
+  // Future value of regular payments
+  if(monthlyRate===0)return pmt*n;
+  return pmt*((Math.pow(1+monthlyRate,n)-1)/monthlyRate);
+}
+function calcPMT(pv,fv,monthlyRate,n){
+  // Required monthly payment to reach fv given pv
+  const fvPV=fv-calcFV(pv,monthlyRate,n);
+  if(monthlyRate===0)return fvPV/n;
+  return fvPV/(((Math.pow(1+monthlyRate,n)-1)/monthlyRate));
+}
+
+function getMonthlyRate(){
+  const rateAnn=parseFloat(document.getElementById('pj-rate').value)||0;
+  const rateType=document.getElementById('pj-rate-type').value;
+  const selic=parseFloat(document.getElementById('rate-selic').textContent)||13.75;
+  const cdi=parseFloat(document.getElementById('rate-cdi').textContent)||13.65;
+  const ipca=parseFloat(document.getElementById('rate-ipca').textContent)||4.5;
+  let effectiveAnn=rateAnn;
+  if(rateType==='cdi') effectiveAnn=(rateAnn/100)*cdi;
+  else if(rateType==='selic') effectiveAnn=(rateAnn/100)*selic;
+  else if(rateType==='ipca') effectiveAnn=rateAnn+ipca;
+  return Math.pow(1+effectiveAnn/100,1/12)-1;
+}
+
+function buildEvolutionData(initial,monthly,monthlyRate,n){
+  const labels=[],vals=[];
+  let acc=initial;
+  labels.push('Início');vals.push(acc);
+  for(let i=1;i<=n;i++){
+    acc=acc*(1+monthlyRate)+monthly;
+    if(i%Math.max(1,Math.floor(n/12))===0||i===n){
+      labels.push(MS[(new Date().getMonth()+i)%12]+'/'+String(new Date().getFullYear()+Math.floor((new Date().getMonth()+i)/12)).slice(2));
+      vals.push(parseFloat(acc.toFixed(2)));
+    }
+  }
+  return{labels,vals};
+}
+
+function renderProjEvolution(initial,monthly,monthlyRate,n,invested){
+  const{labels,vals}=buildEvolutionData(initial,monthly,monthlyRate,n);
+  const investedLine=labels.map((_,i)=>parseFloat((initial+(monthly*(i*(n/labels.length)))).toFixed(2)));
+  if(projEvolutionChart)projEvolutionChart.destroy();
+  projEvolutionChart=new Chart(document.getElementById('projEvolutionChart'),{
+    type:'line',
+    data:{labels,datasets:[
+      {label:'Patrimônio projetado',data:vals,borderColor:'#5b8dee',backgroundColor:'rgba(91,141,238,0.1)',borderWidth:2,pointRadius:3,fill:true,tension:0.3},
+      {label:'Total investido',data:investedLine,borderColor:'#7a7f9a',borderDash:[4,4],borderWidth:1.5,pointRadius:0,fill:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+      scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:10}}},
+              y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:10},callback:v=>fmtK(v)}}}}
+  });
+  document.getElementById('proj-chart-card').style.display='block';
+}
+
+function calcProject(){
+  const errEl=document.getElementById('pj-error');errEl.style.display='none';
+  const months=parseInt(document.getElementById('pj-months').value);
+  const ir=document.getElementById('pj-ir').value;
+  if(!months||months<1){errEl.textContent='Informe o prazo em meses.';errEl.style.display='block';return;}
+  const monthlyRate=getMonthlyRate();
+  const irRate=getIRRate(months,ir);
+  const days=months*30;
+  const iofRate=getIOF(Math.min(days,30));
+
+  if(curProjMode===1){
+    const target=parseFloat(document.getElementById('pj-target').value)||0;
+    const initial=parseFloat(document.getElementById('pj-initial').value)||0;
+    if(!target){errEl.textContent='Informe o valor alvo.';errEl.style.display='block';return;}
+    const pmt=calcPMT(initial,target,monthlyRate,months);
+    const totalInvested=initial+(pmt*months);
+    const grossYield=target-totalInvested;
+    const netYield=grossYield*(1-irRate)*(1-iofRate);
+    const netFinal=totalInvested+netYield;
+    document.getElementById('r1-monthly').textContent=fmt(Math.max(0,pmt));
+    document.getElementById('r1-invested').textContent=fmt(totalInvested);
+    document.getElementById('r1-yield').textContent=fmt(netYield);
+    document.getElementById('result-1').style.display='block';
+    lastCalcResult={mode:1,monthly:pmt,initial,monthlyRate,months,totalInvested,netFinal};
+    renderProjEvolution(initial,Math.max(0,pmt),monthlyRate,months,totalInvested);
+  } else if(curProjMode===2){
+    const monthly=parseFloat(document.getElementById('pj-monthly').value)||0;
+    const initial=parseFloat(document.getElementById('pj-initial2').value)||0;
+    if(!monthly&&!initial){errEl.textContent='Informe o aporte.';errEl.style.display='block';return;}
+    const fvLump=calcFV(initial,monthlyRate,months);
+    const fvAnn=calcFVAnnuity(monthly,monthlyRate,months);
+    const grossFinal=fvLump+fvAnn;
+    const totalInvested=initial+(monthly*months);
+    const grossYield=grossFinal-totalInvested;
+    const netYield=grossYield*(1-irRate)*(1-iofRate);
+    const netFinal=totalInvested+netYield;
+    document.getElementById('r2-final').textContent=fmt(netFinal);
+    document.getElementById('r2-invested').textContent=fmt(totalInvested);
+    document.getElementById('r2-yield').textContent=fmt(netYield);
+    document.getElementById('result-2').style.display='block';
+    lastCalcResult={mode:2,monthly,initial,monthlyRate,months,totalInvested,netFinal};
+    renderProjEvolution(initial,monthly,monthlyRate,months,totalInvested);
+  } else if(curProjMode===3){
+    const lump=parseFloat(document.getElementById('pj-lump').value)||0;
+    if(!lump){errEl.textContent='Informe o aporte único.';errEl.style.display='block';return;}
+    const grossFinal=calcFV(lump,monthlyRate,months);
+    const grossYield=grossFinal-lump;
+    const iof=grossYield*iofRate;
+    const netYield=(grossYield-iof)*(1-irRate);
+    const netFinal=lump+netYield;
+    document.getElementById('r3-final').textContent=fmt(netFinal);
+    document.getElementById('r3-gross').textContent=fmt(grossYield);
+    document.getElementById('r3-net').textContent=fmt(netYield);
+    document.getElementById('result-3').style.display='block';
+    lastCalcResult={mode:3,monthly:0,initial:lump,monthlyRate,months,totalInvested:lump,netFinal};
+    renderProjEvolution(lump,0,monthlyRate,months,lump);
+  }
+  document.getElementById('save-proj-btn').style.display='flex';
+}
+
+async function saveProject(){
+  const name=document.getElementById('pj-name').value.trim();
+  const cat=getCatValue('pj');
+  const rateAnn=parseFloat(document.getElementById('pj-rate').value)||0;
+  const rateType=document.getElementById('pj-rate-type').value;
+  const ir=document.getElementById('pj-ir').value;
+  const months=parseInt(document.getElementById('pj-months').value);
+  const errEl=document.getElementById('pj-error');errEl.style.display='none';
+  if(!name){errEl.textContent='Dê um nome ao projeto.';errEl.style.display='block';return;}
+  if(!lastCalcResult){errEl.textContent='Calcule primeiro antes de salvar.';errEl.style.display='block';return;}
+  const btn=document.getElementById('save-proj-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';
+  const payload={
+    user_id:curUser.id,name,category:cat,mode:curProjMode,
+    initial_amount:lastCalcResult.initial,monthly_amount:lastCalcResult.monthly,
+    target_amount:lastCalcResult.netFinal,rate_annual:rateAnn,rate_type:rateType,
+    months,ir_regime:ir
+  };
+  const{data,error}=await sb.from('financial_projects').insert([payload]).select();
+  btn.disabled=false;btn.innerHTML='💾 Salvar projeto';
+  if(error){errEl.textContent=error.message;errEl.style.display='block';return;}
+  allProjects=[data[0],...allProjects];
+  toast('Projeto salvo!');renderProjList();
+}
+
+async function deleteProject(id){
+  await sb.from('financial_projects').delete().eq('id',id).eq('user_id',curUser.id);
+  allProjects=allProjects.filter(p=>p.id!==id);toast('Removido.');renderProjList();
+}
+
+function renderProjList(){
+  const el=document.getElementById('proj-list');
+  document.getElementById('proj-count').textContent=allProjects.length+' projeto(s)';
+  if(allProjects.length===0){el.innerHTML='<div style="color:var(--muted);font-size:12px;text-align:center;padding:28px 0">Nenhum projeto salvo</div>';return;}
+  const modeLabels={1:'🎯 Meta',2:'📈 Projeção',3:'💰 Rendimento'};
+  const modeColors={1:'var(--green)',2:'var(--blue)',3:'var(--purple)'};
+  el.innerHTML=allProjects.map(p=>`
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <div>
+          <div style="font-size:13px;font-weight:500">${p.name}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">${p.category} · ${modeLabels[p.mode]||'—'}</div>
+        </div>
+        <button class="act-btn act-del" onclick="deleteProject(${p.id})">×</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+        <div style="background:var(--bg);border-radius:8px;padding:8px 10px;">
+          <div style="font-size:10px;color:var(--muted)">Aporte inicial</div>
+          <div style="font-size:13px;font-weight:500">${fmt(p.initial_amount)}</div>
+        </div>
+        <div style="background:var(--bg);border-radius:8px;padding:8px 10px;">
+          <div style="font-size:10px;color:var(--muted)">Mensal</div>
+          <div style="font-size:13px;font-weight:500">${fmt(p.monthly_amount)}</div>
+        </div>
+        <div style="background:var(--bg);border-radius:8px;padding:8px 10px;">
+          <div style="font-size:10px;color:var(--muted)">Valor final</div>
+          <div style="font-size:13px;font-weight:500;color:${modeColors[p.mode]||'var(--text)'}">${fmt(p.target_amount)}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:8px;font-size:11px;color:var(--muted);">
+        <span>Taxa: ${p.rate_annual}% a.a. (${p.rate_type})</span>
+        <span>·</span>
+        <span>Prazo: ${p.months} meses</span>
+        <span>·</span>
+        <span>IR: ${p.ir_regime}</span>
+      </div>
+    </div>`).join('');
+}
+
+// ── TAXAS BCB ──
+let ratesLoaded=false;
+async function fetchRates(){
+  document.getElementById('rates-loading').style.display='block';
+  document.getElementById('rates-content').style.display='none';
+  document.getElementById('refresh-rates-btn').innerHTML='<span class="spinner" style="border-top-color:var(--blue)"></span>';
+  try{
+    const today=new Date();
+    const dd=String(today.getDate()).padStart(2,'0');
+    const mm=String(today.getMonth()+1).padStart(2,'0');
+    const yyyy=today.getFullYear();
+    const dateStr=`${dd}/${mm}/${yyyy}`;
+    const startStr=`01/01/${yyyy-1}`;
+    const [selicR,cdiR,ipcaR]=await Promise.all([
+      fetch(`https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados/ultimos/1?formato=json`).then(r=>r.json()).catch(()=>null),
+      fetch(`https://api.bcb.gov.br/dados/serie/bcdata.sgs.12/dados/ultimos/252?formato=json`).then(r=>r.json()).catch(()=>null),
+      fetch(`https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados/ultimos/12?formato=json`).then(r=>r.json()).catch(()=>null)
+    ]);
+    // Selic meta (série 432) - valor diário, anualizar
+    let selicAnn=0;
+    if(selicR&&selicR.length>0) selicAnn=parseFloat(selicR[selicR.length-1].valor);
+    // CDI: acumular últimos 252 dias úteis e anualizar
+    let cdiAnn=0;
+    if(cdiR&&cdiR.length>0){
+      const acc=cdiR.reduce((p,d)=>p*(1+parseFloat(d.valor)/100),1);
+      cdiAnn=parseFloat(((Math.pow(acc,252/cdiR.length)-1)*100).toFixed(2));
+    }
+    // IPCA: acumular 12 meses
+    let ipcaAnn=0;
+    if(ipcaR&&ipcaR.length>0){
+      const acc=ipcaR.reduce((p,d)=>p*(1+parseFloat(d.valor)/100),1);
+      ipcaAnn=parseFloat(((acc-1)*100).toFixed(2));
+    }
+    document.getElementById('rate-selic').textContent=selicAnn.toFixed(2)+'%';
+    document.getElementById('rate-cdi').textContent=cdiAnn.toFixed(2)+'%';
+    document.getElementById('rate-ipca').textContent=ipcaAnn.toFixed(2)+'%';
+    // Tips
+    const tips=[
+      {name:'Tesouro Selic',rate:(selicAnn*0.995).toFixed(2),risk:'Baixíssimo',color:'var(--green)',note:'100% Selic, liquidez diária'},
+      {name:'CDB 100% CDI',rate:(cdiAnn).toFixed(2),risk:'Baixo',color:'var(--blue)',note:'Coberto pelo FGC até R$250k'},
+      {name:'LCI/LCA',rate:(cdiAnn*0.88).toFixed(2),risk:'Baixo',color:'var(--teal)',note:'Isento de IR para PF'},
+      {name:'Tesouro IPCA+',rate:'IPCA + 6~7%',risk:'Baixo',color:'var(--amber)',note:'Proteção contra inflação'},
+    ];
+    document.getElementById('investment-tips').innerHTML=tips.map(t=>`
+      <div style="background:var(--surface2);border-radius:8px;padding:10px 12px;border-left:3px solid ${t.color}">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div style="font-size:12px;font-weight:500">${t.name}</div>
+          <div style="font-size:13px;font-weight:600;color:${t.color}">${t.rate}%a.a.</div>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-top:3px">${t.note}</div>
+        <div style="font-size:10px;color:var(--muted2);margin-top:1px">Risco: ${t.risk}</div>
+      </div>`).join('');
+    ratesLoaded=true;
+  }catch(e){console.error(e);}
+  document.getElementById('rates-loading').style.display='none';
+  document.getElementById('rates-content').style.display='block';
+  document.getElementById('refresh-rates-btn').textContent='↺ Atualizar';
 }
 
 // BOOT
