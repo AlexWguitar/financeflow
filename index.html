@@ -339,7 +339,15 @@ input:checked+.slider:before{transform:translateX(16px);background:#fff;}
           </div>
           <div class="form-row2">
             <div class="fi"><label>Categoria</label>
-              <select id="f-cat"><option>Alimentação</option><option>Transporte</option><option>Moradia</option><option>Saúde</option><option>Lazer</option><option>Educação</option><option>Salário</option><option>Investimento</option><option>Outros</option></select>
+              <select id="f-cat" onchange="toggleEntryCat()">
+                <option>Alimentação</option><option>Transporte</option><option>Moradia</option>
+                <option>Saúde</option><option>Lazer</option><option>Educação</option>
+                <option>Salário</option><option>Investimento</option><option>Outros</option>
+                <option value="custom">+ Nova categoria</option>
+              </select>
+              <div class="cat-custom-wrap" id="f-custom-wrap">
+                <input type="text" id="f-custom-cat" placeholder="Digite a categoria..."/>
+              </div>
             </div>
             <div class="fi" style="justify-content:flex-end"><label>&nbsp;</label>
               <button class="btn-submit" id="btn-submit" onclick="saveEntry()">+ Adicionar</button>
@@ -459,7 +467,13 @@ input:checked+.slider:before{transform:translateX(16px);background:#fff;}
       <div class="fg"><label>Valor (R$)</label><input type="number" id="me-val" placeholder="0,00" min="0" step="0.01"/></div>
       <div class="fg"><label>Data</label><input type="date" id="me-date"/></div>
       <div class="fg"><label>Categoria</label>
-        <select id="me-cat"><option>Alimentação</option><option>Transporte</option><option>Moradia</option><option>Saúde</option><option>Lazer</option><option>Educação</option><option>Salário</option><option>Investimento</option><option>Outros</option></select>
+        <select id="me-cat" onchange="document.getElementById('me-custom-wrap').style.display=this.value==='custom'?'block':'none'">
+          <option>Alimentação</option><option>Transporte</option><option>Moradia</option>
+          <option>Saúde</option><option>Lazer</option><option>Educação</option>
+          <option>Salário</option><option>Investimento</option><option>Outros</option>
+          <option value="custom">+ Nova categoria</option>
+        </select>
+        <div class="cat-custom-wrap" id="me-custom-wrap"><input type="text" id="me-custom-cat" placeholder="Digite a categoria..."/></div>
       </div>
       <div class="fg"><label>Tipo</label>
         <select id="me-type"><option value="g">Gasto</option><option value="e">Entrada</option></select>
@@ -740,6 +754,15 @@ function calcInstallment(){
   if(total&&inst)document.getElementById('mr-inst-val').value=(total/inst).toFixed(2);
 }
 
+function toggleEntryCat(){
+  const sel=document.getElementById('f-cat');
+  document.getElementById('f-custom-wrap').style.display=sel.value==='custom'?'block':'none';
+}
+function getEntryCat(){
+  const sel=document.getElementById('f-cat');
+  if(sel.value==='custom'){const v=document.getElementById('f-custom-cat').value.trim();return v||'Outros';}
+  return sel.value;
+}
 function setType(t){
   curType=t;
   document.getElementById('btn-g').className='type-btn'+(t==='g'?' active-g':'');
@@ -756,7 +779,7 @@ function changeMonth(d){
 async function saveEntry(){
   const desc=document.getElementById('f-desc').value.trim();
   const val=parseFloat(document.getElementById('f-val').value);
-  const cat=document.getElementById('f-cat').value;
+  const cat=getEntryCat();
   const dateRaw=document.getElementById('f-date').value;
   if(!desc||!val||val<=0||!dateRaw){toast('Preencha todos os campos.');return;}
   const [y,m,day]=dateRaw.split('-');
@@ -766,6 +789,9 @@ async function saveEntry(){
   if(error){toast('Erro: '+error.message);return;}
   allEntries=[data[0],...allEntries];
   document.getElementById('f-desc').value='';document.getElementById('f-val').value='';
+  document.getElementById('f-custom-cat').value='';
+  document.getElementById('f-custom-wrap').style.display='none';
+  document.getElementById('f-cat').value=curType==='e'?'Salário':'Alimentação';
   toast('Lançamento salvo!');render();
 }
 
@@ -778,7 +804,11 @@ function openEditEntry(id){
   document.getElementById('me-val').value=e.value;
   const parts=e.entry_date.split('/');
   document.getElementById('me-date').value=`${parts[2]}-${parts[1]}-${parts[0]}`;
-  document.getElementById('me-cat').value=e.category;
+  // set category - handle custom
+  const meCat=document.getElementById('me-cat');
+  const opts=Array.from(meCat.options).map(o=>o.value);
+  if(opts.includes(e.category)){meCat.value=e.category;document.getElementById('me-custom-wrap').style.display='none';}
+  else{meCat.value='custom';document.getElementById('me-custom-wrap').style.display='block';document.getElementById('me-custom-cat').value=e.category;}
   document.getElementById('me-type').value=e.type;
   document.getElementById('me-error').style.display='none';
   openModal('entry');
@@ -787,7 +817,8 @@ function openEditEntry(id){
 async function updateEntry(){
   const desc=document.getElementById('me-desc').value.trim();
   const val=parseFloat(document.getElementById('me-val').value);
-  const cat=document.getElementById('me-cat').value;
+  const meCat=document.getElementById('me-cat');
+  const cat=meCat.value==='custom'?(document.getElementById('me-custom-cat').value.trim()||'Outros'):meCat.value;
   const dateRaw=document.getElementById('me-date').value;
   const type=document.getElementById('me-type').value;
   const errEl=document.getElementById('me-error');errEl.style.display='none';
