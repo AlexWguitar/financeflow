@@ -400,6 +400,15 @@ input:checked+.slider:before{transform:translateX(16px);background:#fff;}
           <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#e05c5c;display:inline-block"></span>Gastos fixos comprometidos</span>
         </div>
       </div>
+      <!-- CONCENTRAÇÃO DIA/MÊS -->
+      <div class="card" style="margin-top:14px">
+        <div class="card-title">Concentração de vencimentos por dia — próximos 3 meses</div>
+        <div style="position:relative;width:100%;height:300px;"><canvas id="dailyChart"></canvas></div>
+        <div style="display:flex;gap:16px;margin-top:10px;font-size:11px;color:var(--muted);flex-wrap:wrap;">
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#e05c5c;display:inline-block"></span>Gastos fixos</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:#27c98a;display:inline-block"></span>Entradas fixas</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -770,7 +779,7 @@ const CAT_COLORS={'Alimentação':'#5b8dee','Transporte':'#f5a623','Moradia':'#9
 const sb=window.supabase.createClient(SB_URL,SB_KEY);
 let sbAdmin=null,curUser=null,curType='g';
 let allEntries=[],allFixos=[],allInvests=[],allIncomes=[],allRecv=[],allProjects=[];
-let deficitChart=null,fixosChart=null,investChart=null,incomesChart=null,evolucaoChart=null,commitChart=null,projEvolutionChart=null;
+let deficitChart=null,fixosChart=null,investChart=null,incomesChart=null,evolucaoChart=null,commitChart=null,dailyChart=null,projEvolutionChart=null;
 let now=new Date(),curMonth=now.getMonth(),curYear=now.getFullYear();
 let authMode='login',curReport='mensal';
 // edit state
@@ -1258,13 +1267,29 @@ function render(){
 
   const cats={};
   manual.filter(e=>e.type==='g').forEach(e=>{cats[e.category]=(cats[e.category]||0)+Number(e.value);});
-  if(tFixo>0)cats['Fixos']=(cats['Fixos']||0)+tFixo;
+  // Abre gastos fixos por categoria em vez de agrupar em "Fixos"
+  allFixos.forEach(f=>{
+    if(fixoActive(f,curYear,curMonth)){
+      const cat=f.category+' (fixo)';
+      cats[cat]=(cats[cat]||0)+Number(f.value);
+    }
+  });
   if(tInvest>0)cats['Investimentos']=(cats['Investimentos']||0)+tInvest;
-  const sorted=Object.entries(cats).sort((a,b)=>b[1]-a[1]).slice(0,7);
+  const sorted=Object.entries(cats).sort((a,b)=>b[1]-a[1]).slice(0,10);
   const maxC=sorted[0]?sorted[0][1]:1;
   document.getElementById('cat-list').innerHTML=sorted.length===0
     ?'<div style="color:var(--muted);font-size:12px;text-align:center;padding:24px 0">Sem gastos no mês</div>'
-    :sorted.map(([n,v])=>`<div class="cat-item"><div class="cat-name">${n}</div><div class="cat-track"><div class="cat-fill" style="width:${Math.round((v/maxC)*100)}%;background:${CAT_COLORS[n]||'#7a7f9a'}"></div></div><div class="cat-amt">${fmt(v)}</div></div>`).join('');
+    :sorted.map(([n,v])=>{
+      const isFixo=n.endsWith(' (fixo)');
+      const baseCat=isFixo?n.replace(' (fixo)',''):n;
+      const color=isFixo?'#f5a623':(CAT_COLORS[baseCat]||'#7a7f9a');
+      const label=isFixo?`<span style="font-size:10px;color:var(--amber);margin-left:4px">fixo</span>`:'';
+      return`<div class="cat-item">
+        <div class="cat-name" style="display:flex;align-items:center;gap:2px">${baseCat}${label}</div>
+        <div class="cat-track"><div class="cat-fill" style="width:${Math.round((v/maxC)*100)}%;background:${color}"></div></div>
+        <div class="cat-amt">${fmt(v)}</div>
+      </div>`;
+    }).join('');
 
   renderDeficit();
 }
@@ -1312,6 +1337,87 @@ function renderFixosPage(){
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:10},maxRotation:45}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:11},callback:v=>fmtK(v)}}}}});
   renderTimeline('fixos');
   renderCommitChart();
+  renderDailyChart();
+}
+
+function renderDailyChart(){
+  // Monta estrutura: para cada mês (próximos 3), pega os dias que têm gastos ou entradas fixas
+  const points={}; // chave: "DD/MMM" → {expense, income}
+  for(let mi=0;mi<3;mi++){
+    let m=curMonth+mi,y=curYear;
+    if(m>11){m-=12;y++;}
+    const monthLabel=MS[m]+'/'+String(y).slice(2);
+    // gastos fixos ativos neste mês
+    allFixos.forEach(f=>{
+      if(fixoActive(f,y,m)){
+        const key=`${String(f.due_day).padStart(2,'0')} ${monthLabel}`;
+        if(!points[key])points[key]={expense:0,income:0,day:f.due_day,month:monthLabel,sortKey:y*10000+m*100+f.due_day};
+        points[key].expense+=Number(f.value);
+      }
+    });
+    // entradas fixas ativas neste mês
+    allIncomes.forEach(inc=>{
+      if(incomeActive(inc,y,m)){
+        const key=`${String(inc.entry_day).padStart(2,'0')} ${monthLabel}`;
+        if(!points[key])points[key]={expense:0,income:0,day:inc.entry_day,month:monthLabel,sortKey:y*10000+m*100+inc.entry_day};
+        points[key].income+=Number(inc.value);
+      }
+    });
+  }
+  // Ordena por data cronológica
+  const sorted=Object.entries(points).sort((a,b)=>a[1].sortKey-b[1].sortKey);
+  if(sorted.length===0){
+    if(dailyChart){dailyChart.destroy();dailyChart=null;}
+    return;
+  }
+  const labels=sorted.map(([k])=>k);
+  const dataExp=sorted.map(([,v])=>v.expense);
+  const dataInc=sorted.map(([,v])=>v.income);
+  const barW=Math.max(300,sorted.length*60);
+  const canvas=document.getElementById('dailyChart');
+  canvas.parentElement.style.width='100%';
+  canvas.parentElement.style.overflowX='auto';
+  if(dailyChart)dailyChart.destroy();
+  dailyChart=new Chart(canvas,{
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'Gastos fixos',data:dataExp,backgroundColor:'rgba(224,92,92,0.7)',borderRadius:4,borderSkipped:false},
+      {label:'Entradas fixas',data:dataInc,backgroundColor:'rgba(39,201,138,0.7)',borderRadius:4,borderSkipped:false}
+    ]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{
+          title:ctx=>ctx[0].label,
+          label:ctx=>`${ctx.dataset.label}: ${fmt(ctx.raw)}`
+        }}
+      },
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:10},maxRotation:45}},
+        y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#7a7f9a',font:{size:10},callback:v=>fmtK(v)}}
+      }
+    },
+    plugins:[{
+      id:'valueLabels',
+      afterDatasetsDraw(chart){
+        const ctx2=chart.ctx;
+        chart.data.datasets.forEach((ds,di)=>{
+          const meta=chart.getDatasetMeta(di);
+          meta.data.forEach((bar,i)=>{
+            const val=ds.data[i];
+            if(!val||val===0)return;
+            ctx2.save();
+            ctx2.fillStyle=di===0?'#e05c5c':'#27c98a';
+            ctx2.font='bold 10px DM Sans,sans-serif';
+            ctx2.textAlign='center';
+            ctx2.fillText(fmtK(val),bar.x,bar.y-4);
+            ctx2.restore();
+          });
+        });
+      }
+    }]
+  });
 }
 
 function renderIncomesPage(){
